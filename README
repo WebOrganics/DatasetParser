@@ -1,5 +1,7 @@
-= DatasetParser Version: 0.1 =
+= DatasetParser Version: 0.2 =
 
-Updated: Thursday, 18th February 2010
+Updated: Tuesday, 23rd February 2010
+
+usage: see example.php 
 
 See also http://weborganics.co.uk/dataset-transformations/
