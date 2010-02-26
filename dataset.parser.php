@@ -11,6 +11,8 @@ class HTMLQuery
 		
 		$this->object = json_decode(utf8_encode($this->html));
 		
+		$this->file = preg_replace("/([0-9])/e","chr((\\1+112))",mt_rand(100000,999999)).'.rdf';
+		
 		if (isset($this->object->query->base)) 
 		{
 			$this->html = file_get_contents($this->object->query->base);
@@ -50,7 +52,10 @@ class HTMLQuery
 		$xml->preserveWhiteSpace = true;
 		$xml->formatOutput = true;
 		$root = $xml->createElementNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:RDF');
-		header("Content-type: application/rdf+xml"); # set header
+		
+		header("Content-type: application/rdf+xml");
+		header('Content-Disposition: inline; filename='.$this->file);
+		
 		if ( isset($object->base) ) $url = $object->base;
 		$root->setAttribute("xml:base", $url);
 		
