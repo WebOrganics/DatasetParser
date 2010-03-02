@@ -1,5 +1,6 @@
 {
  "query": {
+	"output": "rdfa",
 	"base": "http://weborganics.co.uk/dataset/dataset-rdfa.html",
 	"vocab": {
 		"value": "http://xmlns.com/foaf/0.1/",

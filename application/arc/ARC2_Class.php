@@ -307,13 +307,6 @@ class ARC2_Class {
     $ser = new ARC2_TurtleSerializer(array_merge($this->a, array('ns' => $ns)), $this);
     return (isset($v[0]) && isset($v[0]['s'])) ? $ser->getSerializedTriples($v, $raw) : $ser->getSerializedIndex($v, $raw);
   }
-  
-  function toRDFXML($v, $ns = '', $raw = 0) {
-    ARC2::inc('RDFXMLSerializer');
-    if (!$ns) $ns = isset($this->a['ns']) ? $this->a['ns'] : array();
-    $ser = new ARC2_RDFXMLSerializer(array_merge($this->a, array('ns' => $ns)), $this);
-    return (isset($v[0]) && isset($v[0]['s'])) ? $ser->getSerializedTriples($v, $raw) : $ser->getSerializedIndex($v, $raw);
-  }
 
   function toRDFJSON($v, $ns = '') {
     ARC2::inc('RDFJSONSerializer');
@@ -322,38 +315,10 @@ class ARC2_Class {
     return (isset($v[0]) && isset($v[0]['s'])) ? $ser->getSerializedTriples($v) : $ser->getSerializedIndex($v);
   }
 
-  function toRSS10($v, $ns = '') {
-    ARC2::inc('RSS10Serializer');
+  function toRDFa($v, $ns = '') {
+	ARC2::inc('RDFaSerializer');
     if (!$ns) $ns = isset($this->a['ns']) ? $this->a['ns'] : array();
-    $ser = new ARC2_RSS10Serializer(array_merge($this->a, array('ns' => $ns)), $this);
-    return (isset($v[0]) && isset($v[0]['s'])) ? $ser->getSerializedTriples($v) : $ser->getSerializedIndex($v);
-  }
-
-  function toLegacyXML($v, $ns = '') {
-    ARC2::inc('LegacyXMLSerializer');
-    if (!$ns) $ns = isset($this->a['ns']) ? $this->a['ns'] : array();
-    $ser = new ARC2_LegacyXMLSerializer(array_merge($this->a, array('ns' => $ns)), $this);
-    return $ser->getSerializedArray($v);
-  }
-
-  function toLegacyJSON($v, $ns = '') {
-    ARC2::inc('LegacyJSONSerializer');
-    if (!$ns) $ns = isset($this->a['ns']) ? $this->a['ns'] : array();
-    $ser = new ARC2_LegacyJSONSerializer(array_merge($this->a, array('ns' => $ns)), $this);
-    return $ser->getSerializedArray($v);
-  }
-
-  function toLegacyHTML($v, $ns = '') {
-    ARC2::inc('LegacyHTMLSerializer');
-    if (!$ns) $ns = isset($this->a['ns']) ? $this->a['ns'] : array();
-    $ser = new ARC2_LegacyHTMLSerializer(array_merge($this->a, array('ns' => $ns)), $this);
-    return $ser->getSerializedArray($v);
-  }
-
-  function toHTML($v, $ns = '') {
-    ARC2::inc('POSHRDFSerializer');
-    if (!$ns) $ns = isset($this->a['ns']) ? $this->a['ns'] : array();
-    $ser = new ARC2_POSHRDFSerializer(array_merge($this->a, array('ns' => $ns)), $this);
+    $ser = new ARC2_RDFaSerializer(array_merge($this->a, array('ns' => $ns)), $this);
     return (isset($v[0]) && isset($v[0]['s'])) ? $ser->getSerializedTriples($v) : $ser->getSerializedIndex($v);
   }
 

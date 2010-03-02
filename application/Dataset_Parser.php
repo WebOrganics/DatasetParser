@@ -119,6 +119,13 @@ class HTMLQuery
 				header("Content-Disposition: inline; filename=".$file);
 				$result = $parser->toRDFJSON($triples);
 			break;
+			
+			case 'rdfa':	
+				$file = $this->rand_filename().'.html';
+				header("Content-type: text/html");
+				header("Content-Disposition: inline; filename=".$file);
+				$result = $parser->toRDFa($triples);
+			break;
 		}
 		return $result;
 	}

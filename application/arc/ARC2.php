@@ -33,7 +33,7 @@ class ARC2 {
     $r = realpath(dirname(__FILE__)) . '/';
     $dirs = array(
       'serializer' => 'serializers', 
-      'parser' => 'parsers', 
+      'parser' => 'parsers'
     );
     foreach ($dirs as $k => $dir) {
       if (preg_match('/' . $k . '/i', $f)) {
