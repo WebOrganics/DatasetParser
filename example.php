@@ -1,13 +1,13 @@
 <?php
 #require Dataset.parser class,
-require_once( 'dataset.parser.php' );
-
-#define a $url in this case get url, ?url=http://foo.com/dataset.bar 
-$url = $_GET['url'];
+include_once( 'application/Dataset_Parser.php' );
 
 #start a new HTMLQuery
 $query = new HTMLQuery;
 
+#define a $query in this case get url, example.php?query=http://foo.com/dataset.bar 
+$url = $_GET['query'];
+
 #echo, or print results
-echo $query->this_document($url);
+print $query->this_document($url);
 ?>

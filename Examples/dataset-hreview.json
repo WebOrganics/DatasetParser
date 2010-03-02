@@ -1,0 +1,18 @@
+{
+"query": {
+	"base": "http://weborganics.co.uk/dataset-transformations/hreview.html",
+	"vocab": {
+		"value":"http://rdf.data-vocabulary.org/#"
+	},
+	"item": {
+		".hreview": { 
+			"label": "Review",
+			"item": {
+				".reviewer": {},".rating": { "type":"int" },".dtreviewed": { "type": "date" },
+				".item": { "label": "itemreviewed", "type": "string" },
+				".summary": { "type": "literal" }
+				}
+			}
+		}	
+	}
+}

@@ -1,0 +1,29 @@
+{
+"query": {
+	"base": "http://weborganics.co.uk/dataset-transformations/hproduct.html",
+	"vocab": {
+		"value":"http://rdf.data-vocabulary.org/#",
+		"money": "http://purl.org/microformat/money#"
+	},
+	"item": {
+		".hproduct": { 
+			"label": "Product",
+			"about": {
+				"prod1": "http://anvil.example.com/"
+			},
+			"item": {
+				".brand": {},".category": {},
+				".fn": { "label": "name" },
+				".description": {},
+				".price": {
+					"label": "money:Price",
+					"item": {
+						".currency": { "label": "money:currency" },
+						".amount": { "label": "money:amount", "type": "decimal" }
+						}
+					}
+				}
+			}
+		}	
+	}
+}

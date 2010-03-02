@@ -11,14 +11,13 @@ class HTMLQuery
 		
 		$this->object = json_decode(utf8_encode($this->html));
 		
-		$this->file = preg_replace("/([0-9])/e","chr((\\1+112))",mt_rand(100000,999999)).'.rdf';
+		$this->file = $this->rand_filename().".rdf";
 		
 		if (isset($this->object->query->base)) 
 		{
 			$this->html = file_get_contents($this->object->query->base);
 			$this->contents = "json";
 		}
-		
 		if (!$this->html) 
 		{ 
 			return $this->return_error('1'); 
@@ -38,14 +37,13 @@ class HTMLQuery
 			exit;
 		}
 		
-		$this->object = json_decode(utf8_encode($this->contents));  # decode dataset 
+		$this->object = json_decode(utf8_encode($this->contents));
 		
 		if (!$this->object) 
 		{ 
 			return $this->return_error('3'); 
 			exit;
 		}
-		
 		$object = $this->object->query;
 		
 		$xml  = new DOMDocument('1.0', 'utf-8');
@@ -54,7 +52,7 @@ class HTMLQuery
 		$root = $xml->createElementNS('http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:RDF');
 		
 		header("Content-type: application/rdf+xml");
-		header('Content-Disposition: inline; filename='.$this->file);
+		header("Content-Disposition: inline; filename=".$this->file);
 		
 		if ( isset($object->base) ) $url = $object->base;
 		$root->setAttribute("xml:base", $url);
@@ -80,7 +78,49 @@ class HTMLQuery
 		{
 			$this->json_query_properties($url, $object, $documentTag, $root, $xml, $hasroot = false);
 		}
-		return $xml->saveXML();
+		
+		if (isset($object->output)) 
+		{ 
+			$this->xml = $xml->saveXML();
+			return $this->ARC2_Parse($this->html, $this->xml, $object->output);
+		}
+		else {
+			return $xml->saveXML();
+		}
+	}
+	
+	protected function ARC2_Parse($url, $document, $output)
+	{
+		include_once("arc/ARC2.php");
+
+		$parser = ARC2::getRDFParser();
+		$parser->parse($url, $document);
+		$triples = $parser->getTriples();
+		
+		switch ($output) 
+		{
+			case 'ntriples':
+				$file = $this->rand_filename().'.nt';
+				header("Content-type: text/plain");
+				header("Content-Disposition: inline; filename=".$file);
+				$result = $parser->toNTriples($triples); 
+			break;
+			
+			case 'turtle':
+				$file = $this->rand_filename().'.ttl';
+				header("Content-type: text/turtle");
+				header("Content-Disposition: inline; filename=".$file);
+				$result = $parser->toTurtle($triples);
+			break;
+			
+			case 'rdfjson':	
+				$file = $this->rand_filename().'.json';
+				header("Content-type: application/json");
+				header("Content-Disposition: inline; filename=".$file);
+				$result = $parser->toRDFJSON($triples);
+			break;
+		}
+		return $result;
 	}
 	
 	protected function json_query_properties($url, $object, $documentTag, $root, $xml, $hasroot) 
@@ -95,6 +135,8 @@ class HTMLQuery
 			if (preg_match("/\b$item\b/i", $documentTag->getAttribute($attribute)) 
 				or
 				$documentTag->nodeName == $item && $attribute == "node" ) {
+				
+				$parse_property = true;
 					
 					if (isset($value->item)) {
 					
@@ -109,9 +151,7 @@ class HTMLQuery
 					else $arrvalue = array_values($arrvalue);
 					
 						foreach ( $documentTags as $documentTag ) 
-						{						
-						$parse_property = true;
-							
+						{													
 							foreach ( $value->item as $prop => $val ) {
 								
 								foreach ($this->return_node_or_attribute($prop) as $attr => $i)
@@ -137,7 +177,6 @@ class HTMLQuery
 								}
 							}
 						}
-						unset( $arrvalue, $thiskey, $thisval, $parse_property );
 					}
 					else {
 					
@@ -145,12 +184,10 @@ class HTMLQuery
 						{
 							$this->return_properties($url, $item, $value, $documentTag, $root, $xml);
 						}
-						else 
-						{
+						else {
+						
 						if (!isset($arrvalue) ) $arrvalue = array();
 						else $arrvalue = array_values($arrvalue);
-							
-						$parse_property = true;
 							
 						foreach ($arrvalue as $thiskey => $thisval)
 						{
@@ -165,9 +202,9 @@ class HTMLQuery
 							$this->return_properties($url, $item, $value, $documentTag, $class, $xml);
 							$arrvalue[] = $item;
 						}
-						unset( $arrvalue, $thiskey, $thisval, $parse_property );
 					}
 				}
+				unset( $arrvalue, $thiskey, $thisval, $parse_property );
 			}
 		}
 	}
@@ -550,6 +587,11 @@ class HTMLQuery
 	elseif ($documentTag->getAttribute('id')) $resource = $url."#".$documentTag->getAttribute('id');
 	
 	return $resource;
+	}
+	
+	protected function rand_filename()
+	{
+		return preg_replace("/([0-9])/e","chr((\\1+112))",mt_rand(100000,999999));
 	}
 	
 	protected function return_error($num) 

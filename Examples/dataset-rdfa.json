@@ -1,0 +1,19 @@
+{
+ "query": {
+	"base": "http://weborganics.co.uk/dataset/dataset-rdfa.html",
+	"vocab": {
+		"value": "http://xmlns.com/foaf/0.1/",
+		"dc": "http://purl.org/dc/elements/1.1/"
+	},
+	"item": {
+		"property~=title": { "label": "dc:title" },
+		"typeof~=Person": { 
+			"item": {
+				"property~=name": {}, "property~=nick": {},
+				"rel~=mbox": { "type": "resource" },
+				"rel~=weblog": { "type": "resource" }
+				} 
+			}
+		}
+	}
+}

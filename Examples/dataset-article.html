@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="dataset" href="http://test.server/dataset/Examples/dataset-article.json" type="application/json">
+	<title>Dataset Test HTML 5 Article + hMedia</title>
+	<style type="text/css">
+	<!--
+	body, p, ol, ul, td {
+		font-family:"Lucida Sans Unicode",Verdana,sans-serif;
+		font-size:small;
+	}
+	hgroup, aside {
+	position: relative;
+	left: 20px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	}
+	ol {list-style-type:upper-roman}
+	h3, h2, h1{
+		color:#003366;
+		font-weight:bold;
+	}
+	h2 {
+		font-size:20px;
+	}
+	a:link, a:visited {
+		color:#003366;
+		text-decoration:none;
+	}
+	textarea{
+		background-color:black;
+		color:white;
+		display:block;
+		font-size:small;
+		padding:2px;
+		overflow:auto;
+		width:80%;
+		height:400px;
+		}
+	//-->
+	</style>
+</head>
+<body>
+<article id="feed">
+  <hgroup>
+	<h1><a rel="index" href="http://weborganics.co.uk/dataset/dataset-article.html" title="Dataset Test HTML 5 Article">Dataset Test HTML 5 Article + hMedia</a></h1>
+	<h2>A RSS 1.0 test</h2>
+  </hgroup>
+  <div id="main">
+  <ol>
+	<li><section id="second">
+		<h3><a rel="bookmark" href="http://weborganics.co.uk/dataset/dataset-article.html#second" title="Sir James Galway playing with the Carion quintet">Sir James Galway playing with the Carion quintet</a></h3>
+		<p>By <span class="vcard"><a class="url" href="http://weborganics.co.uk/"><span class="fn">Martin</span></a></span> on 
+		<time datetime="2009-09-09T18:20:22+01:00">9th September 2009</time></p>
+		<div><p>This recording of Sir James Galway playing with the Carion quintet is a live performance made in the Concertsal of Danish Radio, November 11, 2005 at 8PM. </p></div>
+			<audio class="hmedia" controls>
+				<source class="player" src="http://music.ibiblio.org/pub/multimedia/pandora/vorbis/Galway/Nielsen/1Nielsen_Allegro_ben_moderato.ogg" type="audio/ogg">
+				<p>Download: <a rel="enclosure" href="http://music.ibiblio.org/pub/multimedia/pandora/vorbis/Galway/Nielsen/1Nielsen_Allegro_ben_moderato.ogg">
+					<span class="fn">James Galway playing with the Carion quintet</span>
+				</a></p>
+			</audio>
+	</section></li>
+
+	<li><section id="first">
+		<h3><a rel="bookmark" href="http://weborganics.co.uk/dataset/dataset-article.html#first" title="Mozilla Service Week">Meet Firefox</a></h3>
+		<p>By <span class="author vcard"><a class="url" href="http://weborganics.co.uk/"><span class="fn">Martin</span></a></span> on 
+		<time datetime="2009-09-08T12:30:36+01:00">8th September 2009</time></p>
+		<div><p>Meet Firefox, A quick overview of what makes Mozilla's latest browser so great.</p></div>
+			<video class="hmedia" width="500" height="300" controls>
+				<source class="player" src="http://videos.mozilla.org/firefox/3.6/meetfirefox/FF3.6_Screencast_FINAL.ogv" type="video/ogg">
+				<p>Download: <a rel="enclosure" href="http://videos.mozilla.org/firefox/3.6/meetfirefox/FF3.6_Screencast_FINAL.ogv" type="video/ogg">
+					<span class="fn">Meet Firefox</span>
+				</a></p>
+			</video>
+	</section></li>
+	</ol>
+	</div>
+<aside>
+  <p>Get RDF <a href="javascript:void(location.href='http://test.server/dataset/?query='+location.href)">dataset</a></p></aside>
+</article>
+</body>
+</html>

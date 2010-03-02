@@ -1,0 +1,19 @@
+{
+"query": {
+	"output": "ntriples",
+	"base": "http://weborganics.co.uk/dataset-transformations/hcal.html",
+	"vocab": {
+		"value":"http://www.w3.org/2002/12/cal/ical#"
+	},
+	"item": {
+		".vevent": { 
+			"item": {
+				".summary": {}, ".dtstamp": {}, ".uid": {},
+				".dtstart": {"type": "datetime"},
+				".dtend": {"type": "datetime"},
+				".class": {},".category": {}
+				}
+			}
+		}	
+	}
+}

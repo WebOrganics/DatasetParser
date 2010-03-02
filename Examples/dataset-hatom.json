@@ -1,0 +1,42 @@
+{
+"query": {
+	"base": "http://weborganics.co.uk/dataset-transformations/hatom.html",
+	"vocab": {
+		"value":"http://purl.org/rss/1.0/",
+		"dc": "http://purl.org/dc/elements/1.1/" 
+	},
+	"item": {
+		".hfeed": { 
+			"label": "channel",
+			"item": {
+				"h1": { "label": "title" },
+				"h2": { "label": "description" },
+				"rel~=index": { "label": "link", "type": "resourceplain" },
+				"#content": {
+					"label": "items",
+					"about": false,
+					"item": {
+						"#main": {
+							"label": "rdf:Seq",
+							"about": false,
+							"item": {
+								".hentry": { "label": "rdf:li", "type": "resource", "multiple": true }
+								}
+							}
+						}
+					}
+				}
+			},
+			".hentry": {
+				"label" : "item",
+				"item" : {
+					"rel~=bookmark" : { "label": "link", "type": "resourceplain" },
+					".entry-title": { "label": "title" },
+					".fn": { "label": "dc:creator" },
+					".updated": { "label": "dc:date", "type": "datetime" },
+					".entry-content": { "label": "description", "type": "cdata" }
+				}
+			}
+		}	
+	}
+}
