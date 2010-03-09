@@ -4,7 +4,7 @@ Updated: Tuesday, 2nd March 2010
 
 usage: see index.php 
 
-See also http://weborganics.co.uk/dataset-transformations/
+See also http://contentstate.co.uk/dataset/
 
 This version of DatasetParser includes a "lite" version of ARC2 by Benjamin Nowack see http://arc.semsol.org/.
 The lite version ARC2 only includes the tools to parse from RDF to other formats such as NTriples, Turtle, RDFJson and RDFa.
