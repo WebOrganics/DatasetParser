@@ -1,6 +1,6 @@
 {
 "query": {
-	"base": "http://weborganics.co.uk/dataset-transformations/hcard.html",
+	"base": "hcard.html",
 	"vocab": {
 		"vcard":"http://www.w3.org/2006/vcard/ns#",
 		"rel": "http://purl.org/vocab/relationship/" 

@@ -1,6 +1,7 @@
 {
 "query": {
-	"base": "http://weborganics.co.uk/dataset-transformations/hproduct.html",
+	"output": "rdfa",
+	"base": "hproduct.html",
 	"vocab": {
 		"value":"http://rdf.data-vocabulary.org/#",
 		"money": "http://purl.org/microformat/money#"

@@ -1,7 +1,7 @@
 {
 "query": {
 	"output": "rdfjson",
-	"base": "http://weborganics.co.uk/dataset-transformations/organization.html",
+	"base": "organization.html",
 	"vocab": {
 		"value":"http://www.w3.org/2006/vcard/ns#",
 		"gr": "http://purl.org/goodrelations/v1#",

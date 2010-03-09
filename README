@@ -9,4 +9,4 @@ See also http://weborganics.co.uk/dataset-transformations/
 This version of DatasetParser includes a "lite" version of ARC2 by Benjamin Nowack see http://arc.semsol.org/.
 The lite version ARC2 only includes the tools to parse from RDF to other formats such as NTriples, Turtle, RDFJson and RDFa.
 
-Also Included are various examples of dataset transformations including all HTML and JSON, You will have to edit the source of each file and replace the dataset (HTML) and base (JSON) links to where the files actually are on your server.
+Also Included are various examples of dataset transformations including all HTML and JSON

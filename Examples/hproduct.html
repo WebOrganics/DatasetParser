@@ -2,8 +2,8 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="dataset" href="http://test.server/dataset/Examples/dataset-hproduct.json" type="application/json">
-	<title>Dataset Test hproduct</title>
+	<link rel="dataset" href="dataset-hproduct.json" type="application/json">
+	<title>hProduct</title>
    	<style type="text/css">
 	<!--
 	body, p, ol, ul, td {
@@ -11,7 +11,7 @@
 		font-size:small;
 	}
 	h3, h2, h1{
-		color:#003366;
+		color:black;
 		font-weight:bold;
 	}
 	h2 {
@@ -25,7 +25,7 @@
 	bottom: 0px;
 	}
 	a:link, a:visited {
-		color:#003366;
+		color:black;
 		text-decoration:none;
 	}
 	textarea{
@@ -37,12 +37,13 @@
 		overflow:auto;
 		width:80%;
 		height:400px;
-		}
+	}
+	a:hover { text-decoration:none; background-color:black;color:white; }
 	//-->
 	</style>
 </head>
 <body>
-<h1>Dataset Test hProduct</h1>
+<h1>hProduct</h1>
 <div class="hproduct" id="prod1">
    <span class="brand">ACME</span>
    <span class="category">Heavy objects</span>
@@ -50,6 +51,6 @@
    <span class="description">If you need an object to drop from a height, the classic A23859 anvil from ACME is the way to go.</span>
    Priced at only: <span class="price"><abbr class="currency" title="USD">$</abbr><span class="amount">39.99</span></span>
 </div>
-<p>Get RDF <a href="javascript:void(location.href='http://test.server/dataset/?query='+location.href)">dataset</a></p>
+<p>Get RDF <a href="javascript:void(location.href='http://contentstate.co.uk/transformr/dataset/'+location.href)">dataset</a></p>
 </body>
 </html>

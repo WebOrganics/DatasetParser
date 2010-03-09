@@ -15,7 +15,7 @@ class HTMLQuery
 		
 		if (isset($this->object->query->base)) 
 		{
-			$this->html = file_get_contents($this->object->query->base);
+			$this->html = file_get_contents($this->return_url($this->object->query->base, $url));
 			$this->contents = "json";
 		}
 		if (!$this->html) 
@@ -29,7 +29,7 @@ class HTMLQuery
 		$xpath = new DomXpath($dom);
 		
 		if ($this->contents == "json") $this->contents = file_get_contents($url);
-		else $this->contents = file_get_contents($this->json_dataset($xpath));
+		else $this->contents = file_get_contents($this->json_dataset($xpath, $url));
 		
 		if (!$this->contents) 
 		{ 
@@ -54,7 +54,7 @@ class HTMLQuery
 		header("Content-type: application/rdf+xml");
 		header("Content-Disposition: inline; filename=".$this->file);
 		
-		if ( isset($object->base) ) $url = $object->base;
+		if ( isset($object->base) ) $url = $this->return_url($object->base , $url);
 		$root->setAttribute("xml:base", $url);
 		
 		$xml->appendChild($root);
@@ -132,7 +132,14 @@ class HTMLQuery
 	
 	protected function json_query_properties($url, $object, $documentTag, $root, $xml, $hasroot) 
 	{
+	/* this function is crappy sorry */
+	
 		foreach ($object->item as $item => $value) {
+		
+		$parse_property = true;
+	
+		if (!isset($arrvalue) ) $arrvalue = array();
+		else $arrvalue = array_values($arrvalue);
 		
 		foreach ($this->return_node_or_attribute($item) as $attr => $i)
 		{
@@ -142,8 +149,6 @@ class HTMLQuery
 			if (preg_match("/\b$item\b/i", $documentTag->getAttribute($attribute)) 
 				or
 				$documentTag->nodeName == $item && $attribute == "node" ) {
-				
-				$parse_property = true;
 					
 					if (isset($value->item)) {
 					
@@ -153,9 +158,6 @@ class HTMLQuery
 					$this->rdf_about($url, $documentTag, $value, $class);
 					
 					$documentTags = $documentTag->getElementsByTagName('*');
-					
-					if (!isset($arrvalue) ) $arrvalue = array();
-					else $arrvalue = array_values($arrvalue);
 					
 						foreach ( $documentTags as $documentTag ) 
 						{													
@@ -185,20 +187,18 @@ class HTMLQuery
 							}
 						}
 					}
-					else {
-					
+					else 
+					{
 						if ($hasroot == true ) 
 						{
 							$this->return_properties($url, $item, $value, $documentTag, $root, $xml);
+							$arrvalue[] = $item;
 						}
 						else {
-						
-						if (!isset($arrvalue) ) $arrvalue = array();
-						else $arrvalue = array_values($arrvalue);
 							
 						foreach ($arrvalue as $thiskey => $thisval)
 						{
-							if ($thisval == $prop) $parse_property = false;
+							if ($thisval == $item) $parse_property = false;
 						}
 						if (isset($value->multiple)) $parse_property = true;
 						
@@ -211,22 +211,22 @@ class HTMLQuery
 						}
 					}
 				}
-				unset( $arrvalue, $thiskey, $thisval, $parse_property );
 			}
 		}
+		unset( $arrvalue, $thiskey, $thisval, $parse_property );
+		/* end crappy function */
 	}
 	
 	
-	protected function json_dataset($xpath) 
+	protected function json_dataset($xpath, $url) 
 	{
-		$this->json_data ='';
-		
 		$data = "//link[contains(concat(' ',normalize-space(@rel), ' '),' dataset ')]";
 		if($nodes = $xpath->query($data)){
 			foreach($nodes as $node){
-				$this->json_data = $node->getAttribute('href');
+				$resource = $node->getAttribute('href');
+				$json_data = $this->return_url($resource , $url);
             }
-			return $this->json_data;
+			return $json_data;
         }
 	}
 	
@@ -375,7 +375,7 @@ class HTMLQuery
 				case 'literal':
 				$children = $documentTag->childNodes;
 				$property = $xml->createElement($this->get_label($val, $prop));
-				$property->setAttribute('rdf:datatype', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral');
+				$property->setAttribute('rdf:parseType', 'Literal');
 				foreach ($children as $child) {
 					if ($child != new DOMText) $child->setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
 					$property->appendChild($xml->importNode($child, TRUE));
@@ -453,11 +453,25 @@ class HTMLQuery
 				$root->appendChild($newroot);
 				$this->rdf_about($url, $documentTag, $val, $newroot);
 			} 
-				else 
+			elseif (isset($val->type) && $val->type == "rdfresource")
 			{
 				$newroot = $xml->createElement($this->get_label($val, $prop));
 				$class->appendChild($newroot);
-				if (!isset($val->about) ) $newroot->setAttribute("rdf:parseType", "Resource");	
+				$newroot->setAttribute("rdf:parseType", "Resource");	
+			}
+			elseif (isset($val->type) && $val->type == "collection")
+			{
+				$newroot = $xml->createElement($this->get_label($val, $prop));
+				$class->appendChild($newroot);
+				$newroot->setAttribute("rdf:parseType", "Collection");	
+			}
+			else
+			{
+				$this->root = $xml->createElement($this->get_label($val, $prop));
+				$class->appendChild($this->root);
+				$newroot = $xml->createElement("rdf:Description");
+				$this->root->appendChild($newroot);
+			
 			}
 			foreach ( $documentTags as $documentTag ) 
 				$this->json_query_properties($url, $val, $documentTag, $newroot, $xml, $hasroot = true);

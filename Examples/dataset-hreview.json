@@ -1,6 +1,6 @@
 {
 "query": {
-	"base": "http://weborganics.co.uk/dataset-transformations/hreview.html",
+	"base": "hreview.html",
 	"vocab": {
 		"value":"http://rdf.data-vocabulary.org/#"
 	},

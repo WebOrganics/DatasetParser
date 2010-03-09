@@ -1,0 +1,12 @@
+{
+	"query":  {
+		"output": "ntriples",
+		"base": "http://example.com/",
+		"vocab": {
+			"dc": "http://purl.org/dc/elements/1.1/"
+		},
+		"item": {
+			"title": {  "label": "dc:title" }
+		}
+	}
+}
