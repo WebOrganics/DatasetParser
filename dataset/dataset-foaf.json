@@ -1,16 +1,16 @@
 {
 "query": {
-	"base": "foaf.html",
+	"url": "foaf.html",
 	"vocab": {
 		"value":"http://xmlns.com/foaf/0.1/",
 		"geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
 		"dc": "http://purl.org/dc/elements/1.1/",
 		"xfn": "http://gmpg.org/xfn/11#"
 	},
-	"item": {
+	"select": {
 		"html": {
 			"label": "PersonalProfileDocument",
-			"item": {
+			"select": {
 				"title": { "label": "dc:title"},
 				"#weborganics": {"label": "primaryTopic", "type": "resource"},
 				".vcard": {"label": "maker", "type": "resource"}
@@ -18,14 +18,12 @@
 		},
 		".vcard": { 
 			"label": "Person",
-			"item": {
+			"select": {
 				".fn": { "label": "name" },
 				".url": { "label": "homepage", "type": "resource" },
 				".email": { 
 					"label": "mbox_sha1sum",
-					"content": {
-						"value": "f987ae3a50b2aa20e9cc41386f2e50320c7e1ff1"
-					}
+					"content":  "f987ae3a50b2aa20e9cc41386f2e50320c7e1ff1"
 				},
 				".given-name": { "label": "givenName" },
 				".family-name": { "label": "familyName" },
@@ -34,13 +32,11 @@
 					"about": false,
 					"label": "geo:Point",
 					"rev": "based_near",
-					"item": {
+					"select": {
 						".geo": { 
-							"label": "rdf:type",
+							"label": "rdf:Type",
 							"type": "resource",
-							"content": {
-								"value": "http://www.w3.org/2000/10/swap/pim/contact#ContactLocation"
-							}
+							"content": "http://www.w3.org/2000/10/swap/pim/contact#ContactLocation"
 						},
 						".longitude": { "label": "geo:long" },
 						".latitude": { "label": "geo:lat" }

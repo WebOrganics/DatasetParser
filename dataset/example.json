@@ -1,11 +1,11 @@
 {
 	"query":  {
 		"output": "ntriples",
-		"base": "http://example.com/",
+		"url": "http://example.com/",
 		"vocab": {
 			"dc": "http://purl.org/dc/elements/1.1/"
 		},
-		"item": {
+		"select": {
 			"title": {  "label": "dc:title" }
 		}
 	}

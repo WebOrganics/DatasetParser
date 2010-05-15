@@ -1,15 +1,14 @@
 {
  "query": {
-	"output": "ntriples",
-	"base": "rdfa.html",
+	"url": "rdfa.html",
 	"vocab": {
 		"value": "http://xmlns.com/foaf/0.1/",
 		"dc": "http://purl.org/dc/elements/1.1/"
 	},
-	"item": {
+	"select": {
 		"property~=title": { "label": "dc:title" },
 		"typeof~=Person": { 
-			"item": {
+			"select": {
 				"property~=name": {}, "property~=nick": {},
 				"rel~=mbox": { "type": "resource" },
 				"rel~=weblog": { "type": "resource" }

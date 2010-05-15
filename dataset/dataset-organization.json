@@ -1,0 +1,29 @@
+{
+"query": {
+	"url": "organization.html",
+	"vocab": {
+		"value":"http://www.w3.org/2006/vcard/ns#",
+		"gr": "http://purl.org/goodrelations/v1#"
+	},
+	"select": {
+		".vcard": { 
+			"label": "gr:BusinessEntity",
+			"select": {
+				".org": { "label": "gr:legalName", "type": "http://www.w3.org/2001/XMLSchema#string" },
+				".url": { "type": "resource" },
+				".adr": {
+					"label":"Address",
+					"type": "resource",
+					"select": {
+						".street-address": {},
+						".locality": {},
+						".region": {},
+						".postal-code": {},
+						".tel": {}
+						}
+					}
+				}
+			}
+		}	
+	}
+}

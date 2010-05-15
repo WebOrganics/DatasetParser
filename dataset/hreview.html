@@ -2,8 +2,8 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="dataset" href="dataset-organization.json" type="application/json">
-	<title>Organization</title>
+	<link rel="dataset" href="dataset-hreview.json" type="application/json">
+	<title>hReview</title>
    	<style type="text/css">
 	<!--
 	body, p, ol, ul, td {
@@ -43,17 +43,14 @@
 	</style>
 </head>
 <body>
-<h1>Organization</h1>
-<div class="vcard" id="BusinessEntity">
-   <span class="fn"><a class="url org" href="http://pizza.example.com/">L'Amourita Pizza</a></span>, 
-   <div class="adr">
-     <span class="street-address">2040 Any Street</span>
-     <span class="locality">Springfield</span>
-     <span class="region">WA</span>
-     <span class="postal-code">98102</span>, 
-	 Tel: <span class="tel">206-555-7242</span>
-   </div>
+<h1>hReview</h1>
+<div class="hreview" id="review-001">
+   <span class="item"><span class="fn">L'Amourita Pizza</span></span>
+   <abbr class="rating" title="4">****</abbr>
+   <span class="reviewer">Ulysses Grant</span>
+   <span class="dtreviewed" title="2009-01-06">6th January 2009</span>
+   <span class="summary">"Delicious, tasty pizza in Eastlake."</span>
 </div>
-<p>Get RDF <a href="javascript:void(location.href='http://contentstate.co.uk/transformr/dataset/'+location.href)">dataset</a></p>
+  <p>Get RDF <a href="javascript:void(location.href='http://weborganics.co.uk/dataset/?url='+location.href)">dataset</a></p>
 </body>
 </html>

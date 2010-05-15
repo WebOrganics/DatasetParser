@@ -2,8 +2,8 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="dataset" href="dataset-hproduct.json" type="application/json">
-	<title>hProduct</title>
+	<link rel="dataset" href="dataset-hcard.json" type="application/json">
+	<title>hCard</title>
    	<style type="text/css">
 	<!--
 	body, p, ol, ul, td {
@@ -43,14 +43,15 @@
 	</style>
 </head>
 <body>
-<h1>hProduct</h1>
-<div class="hproduct" id="prod1">
-   <span class="brand">ACME</span>
-   <span class="category">Heavy objects</span>
-   <span class="fn">Large all-purpose anvil</span>
-   <span class="description">If you need an object to drop from a height, the classic A23859 anvil from ACME is the way to go.</span>
-   Priced at only: <span class="price"><abbr class="currency" title="USD">$</abbr><span class="amount">39.99</span></span>
+<h1>hCard</h1>
+<div class="vcard" id="smithy">
+   <span class="fn">John Smith</span> aka 
+   &quot;<a class="url nickname" href="http://www.example.com/">Smithy</a>&quot;
+   works for <span class="org">ACME</span>, <span class="adr">
+     <span class="locality">Albuquerque</span></span>, as an 
+   <span class="title">Engineer</span>  
+   and is a friend of <a href="http://darryl-blog.example.com/" rel="friend">Darryl</a>
 </div>
-<p>Get RDF <a href="javascript:void(location.href='http://contentstate.co.uk/transformr/dataset/'+location.href)">dataset</a></p>
+  <p>Get RDF <a href="javascript:void(location.href='http://weborganics.co.uk/dataset/?url='+location.href)">dataset</a></p>
 </body>
 </html>

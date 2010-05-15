@@ -1,17 +1,17 @@
 {
 "query": {
-	"base": "hcard.html",
+	"url": "hcard.html",
 	"vocab": {
 		"vcard":"http://www.w3.org/2006/vcard/ns#",
 		"rel": "http://purl.org/vocab/relationship/" 
 	},
-	"item": {
+	"select": {
 		".vcard": { 
 			"label": "vcard:vCard",
 			"about": {
 				"smithy": "http://example.com/#smithy"
 			},
-			"item": {
+			"select": {
 				".fn": { "label": "vcard:fn" },
 				".nickname": { "label": "vcard:nickname" },
 				".org": { "label": "vcard:org" },
@@ -20,7 +20,7 @@
 				"rel~=friend": { "label": "rel:friendOf", "type": "resource" },
 				".adr": {
 					"label": "vcard:adr",
-					"item": {
+					"select": {
 						".locality": { "label": "vcard:locality" }
 						}
 					}

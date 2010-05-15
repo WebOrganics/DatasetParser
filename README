@@ -1,12 +1,21 @@
-= DatasetParser Version: 1.0 =
+= DatasetParser Version: 1.1 =
 
-Updated: Tuesday, 2nd March 2010
+Updated: Saturday, 15th May 2010
 
-usage: see index.php 
+Usage: 
+
+ # first set the location of ARC2.php in RDFTransformer.php
+ 
+ include_once("Dataset_Transformr.php"); # include Dataset_Transformr class
+  
+ $dataset = new Dataset_Transformr; # start a new dataset instance
+ 
+ $dataset->use_curl = 1; # optional default file_get_contents
+
+ # $dataset->output_as_xml = 1; # optional default output as RDF
+  
+ if (isset($_GET['url'])) print $dataset->asRDF(); # if ?url=... return dataset as RDF.
 
 See also http://weborganics.co.uk/dataset/
-
-This version of DatasetParser includes a "lite" version of ARC2 by Benjamin Nowack see http://arc.semsol.org/.
-The lite version ARC2 only includes the tools to parse from RDF to other formats such as NTriples, Turtle, RDFJson and RDFa.
 
 Also Included are various examples of dataset transformations including all HTML and JSON

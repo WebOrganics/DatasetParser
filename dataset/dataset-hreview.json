@@ -1,0 +1,20 @@
+{
+"query": {
+	"url": "hreview.html",
+	"vocab": {
+		"value":"http://data-vocabulary.org/" 
+	},
+	"select": {
+		".hreview": { 
+			"label": "Review",
+			"select": {
+				".reviewer": {},
+				".rating": { "type":"http://www.w3.org/2001/XMLSchema#int" },
+				".dtreviewed": { "type": "http://www.w3.org/2001/XMLSchema#date" },
+				".item": { "label": "itemreviewed", "type": "http://www.w3.org/2001/XMLSchema#string" },
+				".summary": { "type": "literal" }
+				}
+			}
+		}	
+	}
+}

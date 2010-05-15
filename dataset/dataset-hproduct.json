@@ -1,26 +1,26 @@
 {
 "query": {
 	"output": "rdfa",
-	"base": "hproduct.html",
+	"url": "hproduct.html",
 	"vocab": {
-		"value":"http://rdf.data-vocabulary.org/#",
-		"money": "http://purl.org/microformat/money#"
+		"value":"http://data-vocabulary.org/",
+		"money": "http://www.purl.org/net/rdf-money/" 
 	},
-	"item": {
+	"select": {
 		".hproduct": { 
 			"label": "Product",
 			"about": {
 				"prod1": "http://anvil.example.com/"
 			},
-			"item": {
+			"select": {
 				".brand": {},".category": {},
 				".fn": { "label": "name" },
 				".description": {},
 				".price": {
 					"label": "money:Price",
-					"item": {
+					"select": {
 						".currency": { "label": "money:currency" },
-						".amount": { "label": "money:amount", "type": "decimal" }
+						".amount": { "label": "money:amount", "type": "http://www.w3.org/2001/XMLSchema#decimal" }
 						}
 					}
 				}

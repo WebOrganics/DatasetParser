@@ -1,14 +1,14 @@
 {
 "query": {
-	"base": "hatom.html",
+	"url": "hatom.html",
 	"vocab": {
 		"value":"http://purl.org/rss/1.0/",
-		"dc": "http://purl.org/dc/elements/1.1/" 
+		"dc": "http://purl.org/dc/elements/1.1/"
 	},
-	"item": {
+	"select": {
 		".hfeed": { 
 			"label": "channel",
-			"item": {
+			"select": {
 				"h1": { "label": "title" },
 				"h2": { "label": "description" },
 				"rel~=index": { "label": "link", "type": "resourceplain" },
@@ -16,7 +16,7 @@
 					"about": false,
 					"label": "rdf:Seq",
 					"rev": "items",
-					"item": {
+					"select": {
 						".hentry": { "label": "rdf:li", "type": "resource" }
 						}
 					}
@@ -24,11 +24,11 @@
 			},
 			".hentry": {
 				"label" : "item",
-				"item" : {
+				"select" : {
 					"rel~=bookmark" : { "label": "link", "type": "resourceplain" },
 					".entry-title": { "label": "title" },
 					".author": { "label": "dc:creator" },
-					".updated": { "label": "dc:date", "type": "datetime" },
+					".updated": { "label": "dc:date", "type": "http://www.w3.org/2001/XMLSchema#dateTime" },
 					".entry-content": { "label": "description", "type": "cdata" }
 				}
 			}
