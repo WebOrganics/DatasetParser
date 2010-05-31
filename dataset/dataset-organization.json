@@ -10,7 +10,7 @@
 			"label": "gr:BusinessEntity",
 			"select": {
 				".org": { "label": "gr:legalName", "type": "http://www.w3.org/2001/XMLSchema#string" },
-				".url": { "type": "resource" },
+				".url": { "type": "uri" },
 				".adr": {
 					"label":"Address",
 					"type": "resource",

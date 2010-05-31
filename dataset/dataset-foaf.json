@@ -12,22 +12,22 @@
 			"label": "PersonalProfileDocument",
 			"select": {
 				"title": { "label": "dc:title"},
-				"#weborganics": {"label": "primaryTopic", "type": "resource"},
-				".vcard": {"label": "maker", "type": "resource"}
+				"#weborganics": {"label": "primaryTopic", "type": "uri"},
+				".vcard": {"label": "maker", "type": "uri"}
 			}
 		},
 		".vcard": { 
 			"label": "Person",
 			"select": {
 				".fn": { "label": "name" },
-				".url": { "label": "homepage", "type": "resource" },
+				".url": { "label": "homepage", "type": "uri" },
 				".email": { 
 					"label": "mbox_sha1sum",
 					"content":  "f987ae3a50b2aa20e9cc41386f2e50320c7e1ff1"
 				},
 				".given-name": { "label": "givenName" },
 				".family-name": { "label": "familyName" },
-				".photo": { "label": "img", "type": "resource" },
+				".photo": { "label": "img", "type": "uri" },
 				"div": {
 					"about": false,
 					"label": "geo:Point",
@@ -35,15 +35,15 @@
 					"select": {
 						".geo": { 
 							"label": "rdf:Type",
-							"type": "resource",
+							"type": "uri",
 							"content": "http://www.w3.org/2000/10/swap/pim/contact#ContactLocation"
 						},
 						".longitude": { "label": "geo:long" },
 						".latitude": { "label": "geo:lat" }
 						}
 					},
-					"rel~=me": { "label": "xfn:me", "type": "resource", "multiple": true },
-					".vcard": { "label": "knows", "type": "resource", "multiple": true }
+					"rel~=me": { "label": "xfn:me", "type": "uri", "multiple": true },
+					".vcard": { "label": "knows", "type": "uri", "multiple": true }
 				}
 			}
 		}	

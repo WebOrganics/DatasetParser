@@ -11,13 +11,13 @@
 			"select": {
 				"h1": { "label": "title" },
 				"h2": { "label": "description" },
-				"rel~=index": { "label": "link", "type": "resourceplain" },
+				"rel~=index": { "label": "link", "type": "uriplain" },
 				"#main": {
 					"about": false,
 					"label": "rdf:Seq",
 					"rev": "items",
 					"select": {
-						".hentry": { "label": "rdf:li", "type": "resource" }
+						".hentry": { "label": "rdf:li", "type": "uri" }
 						}
 					}
 				}
@@ -25,7 +25,7 @@
 			".hentry": {
 				"label" : "item",
 				"select" : {
-					"rel~=bookmark" : { "label": "link", "type": "resourceplain" },
+					"rel~=bookmark" : { "label": "link", "type": "uriplain" },
 					".entry-title": { "label": "title" },
 					".author": { "label": "dc:creator" },
 					".updated": { "label": "dc:date", "type": "http://www.w3.org/2001/XMLSchema#dateTime" },

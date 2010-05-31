@@ -13,13 +13,13 @@
 			"select": {
 				"h1": { "label": "title" },
 				"h2": { "label": "description" },
-				"rel~=index": { "label": "link", "type": "resourceplain" },
+				"rel~=index": { "label": "link", "type": "uriplain" },
 				"ol": {
 					"rev": "items",
 					"label": "rdf:Seq",
 					"about": false,
 						"select": {
-							"section": { "label": "rdf:li", "type": "resource", "multiple": true }
+							"section": { "label": "rdf:li", "type": "uri", "multiple": true }
 						}
 					}
 				}
@@ -28,11 +28,11 @@
 				"label" : "item",
 				"select" : {
 					"h3": { "label": "title" },
-					"rel~=bookmark" : { "label": "link", "type": "resourceplain" },
+					"rel~=bookmark" : { "label": "link", "type": "uriplain" },
 					".vcard": { "label": "dc:creator" },
 					"time": { "label": "dc:date",  "type": "http://www.w3.org/2001/XMLSchema#dateTime"  },
 					"div": { "label": "description", "type": "cdata" },
-					"rel~=enclosure" : { "label": "media:enclosure", "type": "resource" }
+					"rel~=enclosure" : { "label": "media:enclosure", "type": "uri" }
 				}
 			}
 		}	

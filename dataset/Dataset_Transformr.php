@@ -362,13 +362,13 @@ class Dataset_Transformr
 					$property = $this->return_text_nodes($val, $documentTag, $prop, $xml);
 			    break;
 				
-			    case "resource":
+			    case "uri":
 					$resource = isset($val->content) ? $this->get_content($val, $documentTag, true) : $this->return_resource($documentTag, $url);
 					$property = $xml->createElement($this->get_label($val, $prop));
 					$property->setAttribute("rdf:resource", $this->return_url($resource, $url));
 			    break;
 				
-				case 'resourceplain': 
+				case 'uriplain': 
 					$resource = isset($val->content) ? $this->get_content($val, $documentTag, true) : $this->return_resource($documentTag, $url);
 					$property = $xml->createElement($this->get_label($val, $prop), $this->return_url($resource, $url));
 				break;

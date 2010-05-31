@@ -83,7 +83,7 @@
 <div id="content">
 <div id="html-query-syntax">
 <h2>Html Query Syntax</h2>
-<p>Html Query is a self description mechanism that uses [1]<a href="#json-specification">JSON</a> to describe the contents of a Html document. Although a Html Query can be used with a constrained vocabulary such as [2]<a href="#microformats">microformats</a>, HTML query does not require the author to change the html of a document in any way, you can just describe what already exists on a page without adding any extra attributes or elements to accommodate your intended semantics.</p>
+<p>Html Query is a self description mechanism that uses [1]<a href="#json-specification">JSON</a> to describe the contents of a Html document. Although a Html Query can be used with a pre-defined vocabulary such as [2]<a href="#microformats">microformats</a>, HTML query does not require the author to change the html of a document in any way, you can just describe what already exists on a page without adding any extra attributes or elements to accommodate your intended semantics.</p>
 <p>This is an example of a simple Html Query.</p>
 <pre>{
 	&quot;query&quot;:  {
@@ -277,8 +277,8 @@ A keyword may also contain other nested keywords. If an keyword contains nested 
 			</li>
 			
 			<li>
-				<h4>resource</h4>
-				<p>A RDF resource, or simply a URL. When stetting the keyword type to resource, the parser extracts the value in the following order, @src then @href.</p> 
+				<h4>uri</h4>
+				<p>A URI, or simply a URL. When stetting the keyword type to uri, the parser extracts the value in the following order, @src then @href.</p> 
 				<p><em>Example Output:</em></p>
 				<pre>&lt;label rdf:resource=&quot;http://someurl.com/&quot; /&gt;</pre>
 				<p>If neither @src or @href are present the value is @id converted to an absolute relative URL, this allows the author to link to other keyword items in the RDF output.</p>
@@ -287,8 +287,8 @@ A keyword may also contain other nested keywords. If an keyword contains nested 
 			</li>
 			
 			<li>
-				<h4>resourceplain</h4>
-				<p>The behaviour of resourceplain is the same as resource, A resourceplain is outputted as a plain literal, text.</p>
+				<h4>uriplain</h4>
+				<p>The behaviour of uriplain is the same as uri, A uriplain is outputted as a plain literal, text.</p>
 				<p><em>Example Output:</em></p>
 				<pre>&lt;label&gt;http://someurl.com/&lt;/label&gt;</pre>
 			</li>
@@ -425,6 +425,7 @@ By using rel dataset you are saying the url referenced in the href attribute of 
         <li>HTML <a href="organization.html">Organization</a>, view <a href="dataset-organization.json">json</a></li>
         <li>HTML <a href="hcard.html">hCard</a>, view <a href="dataset-hcard.json">json</a></li>
 		<li>HTML <a href="http://weborganics.co.uk/demo/haudio.html">hAudio</a>, view <a href="http://weborganics.co.uk/demo/haudio-query.json">json</a></li>
+		<li>RDFa <a href="rdfa.html">FOAF</a>, view <a href="dataset-rdfa.json">json</a></li>
 	</ol>
 </div>
 

@@ -14,7 +14,7 @@
 				},
 				".vevent": {
 					"label": "component",
-					"type": "resource"
+					"type": "uri"
 				}
 			}
 		},

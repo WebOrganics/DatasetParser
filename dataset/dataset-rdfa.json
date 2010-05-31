@@ -10,8 +10,8 @@
 		"typeof~=Person": { 
 			"select": {
 				"property~=name": {}, "property~=nick": {},
-				"rel~=mbox": { "type": "resource" },
-				"rel~=weblog": { "type": "resource" }
+				"rel~=mbox": { "type": "uri" },
+				"rel~=weblog": { "type": "uri" }
 				} 
 			}
 		}

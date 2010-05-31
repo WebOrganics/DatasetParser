@@ -16,8 +16,8 @@
 				".nickname": { "label": "vcard:nickname" },
 				".org": { "label": "vcard:org" },
 				".title": { "label": "vcard:title" },
-				".url": { "label": "vcard:url", "type": "resource" },
-				"rel~=friend": { "label": "rel:friendOf", "type": "resource" },
+				".url": { "label": "vcard:url", "type": "uri" },
+				"rel~=friend": { "label": "rel:friendOf", "type": "uri" },
 				".adr": {
 					"label": "vcard:adr",
 					"select": {
