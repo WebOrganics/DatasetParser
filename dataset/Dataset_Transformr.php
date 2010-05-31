@@ -65,8 +65,8 @@ class Dataset_Transformr
 		foreach ( $object->vocab as $prefix => $urlns ) {	
 			$thisns = $prefix == "value" ? "xmlns" : "xmlns:".$prefix;
 			$result .= $prefix == "value" 
-			? $node->setAttribute($thisns, $urlns) 
-			: $node->setAttributeNS('http://www.w3.org/2000/xmlns/' , $thisns, $urlns);
+					   ? $node->setAttribute($thisns, $urlns) 
+					   : $node->setAttributeNS('http://www.w3.org/2000/xmlns/' , $thisns, $urlns);
 		}
 		return $result;
 	}
@@ -261,7 +261,7 @@ class Dataset_Transformr
 		$this->data = $this->get_file_contents($this->json_dataset($xpath, $this->url));
 		if (!$this->data) return $this->return_error('2');
 		
-		$this->json = json_decode(utf8_encode($this->data));
+		$this->json = json_decode( html_convert_entities($this->data) );
 		if (!$this->json) return $this->return_error('3');
 		
 		$object = $this->json->query;
