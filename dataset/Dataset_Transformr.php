@@ -69,26 +69,26 @@ class Dataset_Transformr
 		return $result;
 	}
 	
-	protected function reverse_strrchr($val, $whereor)
+	protected function reverse_strrchr($val, $selector)
 	{
-		$whereor = strrpos($val, $whereor);
-		return ( substr($val, 0, $whereor) != '' ? substr($val, 0, $whereor) : null );
+		$selector = strrpos($val, $selector);
+		return ( substr($val, 0, $selector) != '' ? substr($val, 0, $selector) : null );
 	}
 
-	protected function forward_strrchr($val, $whereor)
+	protected function forward_strrchr($val, $selector)
 	{
-		return ( strrchr($val, $whereor) ? array_pop(explode($whereor, $val)) : null );
+		return ( strrchr($val, $selector) ? array_pop(explode($selector, $val)) : null );
 	}
 
 	protected  function get_attr_value($val)
 	{
-		$whereors = array('class' => '.', 'id' => '#', 'attr' => '~=');
-		foreach ($whereors as $attribute => $whereor) {
-			if(!is_null( $this->reverse_strrchr($val, $whereor)) && $whereor == '~=' ) {
-				return  array( $this->reverse_strrchr($val, $whereor) => $this->forward_strrchr($val, $whereor) );
+		$selectors = array('class' => '.', 'id' => '#', 'attr' => '~=');
+		foreach ($selectors as $attribute => $selector) {
+			if(!is_null( $this->reverse_strrchr($val, $selector)) && $selector == '~=' ) {
+				return  array( $this->reverse_strrchr($val, $selector) => $this->forward_strrchr($val, $selector) );
 			}
-			elseif(!is_null( $this->forward_strrchr($val, $whereor)) && is_null($this->reverse_strrchr($val, $whereor))) {
-				if ($attribute != 'attr') return  array( $attribute => $this->forward_strrchr($val, $whereor) );
+			elseif(!is_null( $this->forward_strrchr($val, $selector)) && is_null($this->reverse_strrchr($val, $selector))) {
+				if ($attribute != 'attr') return  array( $attribute => $this->forward_strrchr($val, $selector) );
 			}
 		}
 	}

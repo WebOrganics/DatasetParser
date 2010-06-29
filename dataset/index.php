@@ -474,5 +474,4 @@ By using rel dataset you are saying the url referenced in the href attribute of 
 </body>
 </html>
 <?php
- ini_set('display_errors', 1);
 } ?>
