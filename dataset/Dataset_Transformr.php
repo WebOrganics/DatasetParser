@@ -1,6 +1,6 @@
 <?php
 /*
- Dataset TransFormr Version: 1.2, Saturday, 28th June 2010
+ Dataset TransFormr Version: 1.1, Saturday, 15th May 2010
  Author: Martin McEvoy info@weborganics.co.uk
  Usage:
    
@@ -221,11 +221,16 @@ class Dataset_Transformr
 	
 	protected function return_document($parse, $document, $object) 
 	{
-		$this->output_type == 'xml' ?
-		header("Content-type: application/xml") :
-		header("Content-type: application/rdf+xml");
-		header("Content-Disposition: inline; filename=".$this->file);
-		return $document;
+		if ( !isset($object->output) ) {
+			$this->output_type == 'xml' ?
+			header("Content-type: application/xml") :
+			header("Content-type: application/rdf+xml");
+			header("Content-Disposition: inline; filename=".$this->file);
+			return $document;
+		}
+		else {
+			return $parse->ARC2_Parse($this->url, $document, $object->output);
+		}
 	}
 	
  	private function rand_filename($ext = '') {
