@@ -1,13 +1,13 @@
 {
-"query": {
-	"url": "hcal.html",
-	"vocab": {
+"select": {
+	"from": "hcal.html",
+	"prefix": {
 		"value":"http://www.w3.org/2002/12/cal/ical#" 
 	},
-	"select": {
+	"where": {
 		"body": {
 			"label": "Vcalendar",
-			"select": {
+			"where": {
 				"h1": {
 					"label": "prodid",
 					"content": "-//weborganics.co.uk//dataset//hcal $Date: 2010/05/01 19:08:00 $ (BETA)//EN"
@@ -19,8 +19,8 @@
 			}
 		},
 		".vevent": {
-		"label": "Vevent", 
-			"select": {
+		  "label": "Vevent", 
+			"where": {
 				".summary": {}, 
 				".dtstamp": {}, 
 				".uid": {},

@@ -1,18 +1,18 @@
 {
-"query": {
-	"url": "hreview.html",
-	"vocab": {
+"select": {
+	"from": "hreview.html",
+	"prefix": {
 		"value":"http://data-vocabulary.org/" 
 	},
-	"select": {
+	"where": {
 		".hreview": { 
 			"label": "Review",
-			"select": {
+			"where": {
 				".reviewer": {},
 				".rating": { "type":"http://www.w3.org/2001/XMLSchema#int" },
 				".dtreviewed": { "type": "http://www.w3.org/2001/XMLSchema#date" },
 				".item": { "label": "itemreviewed", "type": "http://www.w3.org/2001/XMLSchema#string" },
-				".summary": { "type": "literal" }
+				".summary": { "type": "xmlliteral" }
 				}
 			}
 		}	

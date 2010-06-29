@@ -1,10 +1,8 @@
-= DatasetParser Version: 1.1 =
+= DatasetParser Version: 1.2 =
 
-Updated: Saturday, 15th May 2010
+Updated: Monday, 28th June 2010
 
 Usage: 
-
- # first set the location of ARC2.php in RDFTransformer.php
  
  include_once("Dataset_Transformr.php"); # include Dataset_Transformr class
   

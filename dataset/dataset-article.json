@@ -1,16 +1,16 @@
 {
-"query": {
-	"url": "article.html",
-	"vocab": {
+"select": {
+	"from": "article.html",
+	"prefix": {
 		"value":"http://purl.org/rss/1.0/",
 		"dc": "http://purl.org/dc/elements/1.1/",
 		"media": "http://purl.org/microformat/hmedia/"
  
 	},
-	"select": {
+	"where": {
 		"article": { 
 			"label": "channel",
-			"select": {
+			"where": {
 				"h1": { "label": "title" },
 				"h2": { "label": "description" },
 				"rel~=index": { "label": "link", "type": "uriplain" },
@@ -18,7 +18,7 @@
 					"rev": "items",
 					"label": "rdf:Seq",
 					"about": false,
-						"select": {
+						"where": {
 							"section": { "label": "rdf:li", "type": "uri", "multiple": true }
 						}
 					}
@@ -26,7 +26,7 @@
 			},
 			"section": {
 				"label" : "item",
-				"select" : {
+				"where" : {
 					"h3": { "label": "title" },
 					"rel~=bookmark" : { "label": "link", "type": "uriplain" },
 					".vcard": { "label": "dc:creator" },

@@ -1,20 +1,20 @@
 {
-"query": {
-	"url": "organization.html",
-	"vocab": {
+"select": {
+	"from": "organization.html",
+	"prefix": {
 		"value":"http://www.w3.org/2006/vcard/ns#",
 		"gr": "http://purl.org/goodrelations/v1#"
 	},
-	"select": {
+	"where": {
 		".vcard": { 
 			"label": "gr:BusinessEntity",
-			"select": {
+			"where": {
 				".org": { "label": "gr:legalName", "type": "http://www.w3.org/2001/XMLSchema#string" },
 				".url": { "type": "uri" },
 				".adr": {
 					"label":"Address",
 					"type": "resource",
-					"select": {
+					"where": {
 						".street-address": {},
 						".locality": {},
 						".region": {},

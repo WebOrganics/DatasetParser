@@ -1,28 +1,28 @@
 <?php
 /*
- * Dataset TransFormr Version: 1.1, Saturday, 15th May 2010
- * Author: Martin McEvoy info@weborganics.co.uk
- * Usage:
- *  
- *  include_once("Dataset_Transformr.php"); # include Dataset_Transformr class
- *  
- *  $dataset = new Dataset_Transformr; # start a new dataset instance
- *  
- *  $dataset->use_curl = 1; # optional default file_get_contents
- *
- *  # $dataset->output_as_xml = 1; # optional default output as RDF
- *  
- *  if (isset($_GET['url'])) print $dataset->asRDF(); # if ?url=... return dataset as RDF.
- *  
- * See Also: http://weborganics.co.uk/dataset/ for more information.
+ Dataset TransFormr Version: 1.2, Saturday, 28th June 2010
+ Author: Martin McEvoy info@weborganics.co.uk
+ Usage:
+   
+  include_once("Dataset_Transformr.php"); # include Dataset_Transformr class
+   
+  $dataset = new Dataset_Transformr; # start a new dataset instance
+   
+  $dataset->use_curl = 1; # optional default file_get_contents
+ 
+  # $dataset->output_as_xml = 1; # optional default output as RDF
+   
+  if (isset($_GET['url'])) print $dataset->asRDF(); # if ?url=... return dataset as RDF.
+   
+ See Also: http://weborganics.co.uk/dataset/ for more information.
  */
 include_once("RDFTransformer.php");
 
 class Dataset_Transformr
 {
 	public $output_as_xml = '';
-	
 	public $use_curl = '';
+	public $usedata= '';
 	
 	function __construct() 
 	{
@@ -32,9 +32,9 @@ class Dataset_Transformr
 		
 		$this->json = json_decode(utf8_encode($this->doc));
 		
-		$this->document = isset($this->json->query->url) ? $this->get_file_contents($this->return_url($this->json->query->url, $this->url)) : $this->doc;
+		$this->document = isset($this->json->select->from) ? $this->get_file_contents($this->return_url($this->json->select->from, $this->url)) : $this->doc;
 		
-		$this->is_json = isset($this->json->query->url) ? true : false;
+		$this->is_json = isset($this->json->select->from) ? true : false;
 		
 		$this->output_type = $this->output_as_xml == true  ? 'xml' : 'rdf';
 		
@@ -46,9 +46,7 @@ class Dataset_Transformr
 	protected function json_dataset($xpath, $url) 
 	{
 		$data = "//*[contains(concat(' ',normalize-space(@rel), ' '),' dataset ')][1]";
-		
 		if ($this->is_json != false ) $json_data = $this->url;
-		
 		if($nodes = $xpath->query($data)) 
 		{
 			foreach($nodes as $node) {
@@ -62,7 +60,7 @@ class Dataset_Transformr
 	protected function setXmlns($object, $node) 
 	{
 		$result = '';
-		foreach ( $object->vocab as $prefix => $urlns ) {	
+		foreach ( $object->prefix as $prefix => $urlns ) {	
 			$thisns = $prefix == "value" ? "xmlns" : "xmlns:".$prefix;
 			$result .= $prefix == "value" 
 					   ? $node->setAttribute($thisns, $urlns) 
@@ -71,26 +69,26 @@ class Dataset_Transformr
 		return $result;
 	}
 	
-	protected function reverse_strrchr($val, $selector)
+	protected function reverse_strrchr($val, $whereor)
 	{
-		$selector = strrpos($val, $selector);
-		return ( substr($val, 0, $selector) != '' ? substr($val, 0, $selector) : null );
+		$whereor = strrpos($val, $whereor);
+		return ( substr($val, 0, $whereor) != '' ? substr($val, 0, $whereor) : null );
 	}
 
-	protected function forward_strrchr($val, $selector)
+	protected function forward_strrchr($val, $whereor)
 	{
-		return ( strrchr($val, $selector) ? array_pop(explode($selector, $val)) : null );
+		return ( strrchr($val, $whereor) ? array_pop(explode($whereor, $val)) : null );
 	}
 
 	protected  function get_attr_value($val)
 	{
-		$selectors = array('class' => '.', 'id' => '#', 'attr' => '~=');
-		foreach ($selectors as $attribute => $selector) {
-			if(!is_null( $this->reverse_strrchr($val, $selector)) && $selector == '~=' ) {
-				return  array( $this->reverse_strrchr($val, $selector) => $this->forward_strrchr($val, $selector) );
+		$whereors = array('class' => '.', 'id' => '#', 'attr' => '~=');
+		foreach ($whereors as $attribute => $whereor) {
+			if(!is_null( $this->reverse_strrchr($val, $whereor)) && $whereor == '~=' ) {
+				return  array( $this->reverse_strrchr($val, $whereor) => $this->forward_strrchr($val, $whereor) );
 			}
-			elseif(!is_null( $this->forward_strrchr($val, $selector)) && is_null($this->reverse_strrchr($val, $selector))) {
-				if ($attribute != 'attr') return  array( $attribute => $this->forward_strrchr($val, $selector) );
+			elseif(!is_null( $this->forward_strrchr($val, $whereor)) && is_null($this->reverse_strrchr($val, $whereor))) {
+				if ($attribute != 'attr') return  array( $attribute => $this->forward_strrchr($val, $whereor) );
 			}
 		}
 	}
@@ -143,6 +141,16 @@ class Dataset_Transformr
 	protected function json_value($object, $value='')
 	{
 		return $object->$value;
+	}
+	
+	protected function test_node_attribute($property, $documentTag, $attribute) 
+	{
+		if (preg_match("/\b$property\b/i", $documentTag->getAttribute($attribute) ) || 
+			$documentTag->nodeName == $property && $attribute == "node" ) 
+		{
+			return 1;
+		} 
+		else return 0;
 	}
 	
 	protected function get_content($value, $documentTag, $as_resource ='') 
@@ -213,16 +221,11 @@ class Dataset_Transformr
 	
 	protected function return_document($parse, $document, $object) 
 	{
-		if ( !isset($object->output) ) {
-			$this->output_type == 'xml' ?
-			header("Content-type: application/xml") :
-			header("Content-type: application/rdf+xml");
-			header("Content-Disposition: inline; filename=".$this->file);
-			return $document;
-		}
-		else {
-			return $parse->ARC2_Parse($this->url, $document, $object->output);
-		}
+		$this->output_type == 'xml' ?
+		header("Content-type: application/xml") :
+		header("Content-type: application/rdf+xml");
+		header("Content-Disposition: inline; filename=".$this->file);
+		return $document;
 	}
 	
  	private function rand_filename($ext = '') {
@@ -258,14 +261,14 @@ class Dataset_Transformr
 		@$dom->loadHtml($this->document);
 		$xpath = new DomXpath($dom);
 		
-		$this->data = $this->get_file_contents($this->json_dataset($xpath, $this->url));
+		$this->data = $this->usedata != '' ? $this->get_file_contents($this->usedata) : $this->get_file_contents($this->json_dataset($xpath, $this->url));
 		if (!$this->data) return $this->return_error('2');
 		
 		$this->json = json_decode( html_convert_entities($this->data) );
 		if (!$this->json) return $this->return_error('3');
 		
-		$object = $this->json->query;
-		if (isset($object->url)) $this->url = $this->return_url($object->url , $this->url);
+		$object = $this->json->select;
+		if (isset($object->from)) $this->url = $this->return_url($object->from , $this->url);
 		
 		$xml  = new DOMDocument('1.0', 'utf-8');
 		$xml->preserveWhiteSpace = true;
@@ -288,15 +291,13 @@ class Dataset_Transformr
 	
 	private function json_query_rdf_properties($url, $object, $documentTag, $root, $xml, $hasroot ='') 
 	{
-		foreach ($this->json_value($object, 'select') as $item => $value) {
+		foreach ($this->json_value($object, 'where') as $item => $value) {
 		
 		foreach ($this->return_node_or_attribute($item) as $attribute => $item) {
 		
-		if (preg_match("/\b$item\b/i", $documentTag->getAttribute($attribute)) 
-			or
-			$documentTag->nodeName == $item && $attribute == "node" ) {
+		if ($this->test_node_attribute($item, $documentTag, $attribute) != false) {
 					
-			if (isset($value->select)) {
+			if (isset($value->where)) {
 	
 			$arrvalue = !isset($arrvalue) ? $arrvalue = array() : array_values($arrvalue);
 		
@@ -304,33 +305,40 @@ class Dataset_Transformr
 			$root->appendChild($class);
 					
 			$this->rdf_about($url, $documentTag, $value, $class);
+			
+			if (isset($value->type) && strrchr($value->type, 'http://')) 
+			{
+				$type = $xml->createElement('rdf:type');
+				$type->setAttribute("rdf:resource", $value->type);
+				$class->appendChild($type);
+			}
 					
 			$documentTags = $documentTag->getElementsByTagName('*');
 					
 				foreach ( $documentTags as $documentTag ) {									
 					
-					foreach ( $this->json_value($value, 'select')  as $prop => $val ) 
+					foreach ( $this->json_value($value, 'where')  as $prop => $val ) 
 					{		
 						foreach ($this->return_node_or_attribute($prop) as $attribute => $property) {
 
-							if (preg_match("/\b$property\b/i", $documentTag->getAttribute($attribute) ) 
-								or 
-								$documentTag->nodeName == $property && $attribute == "node" ) {
+							if ($this->test_node_attribute($property, $documentTag, $attribute) != false) {
 								
 									$parse_property = true;
-									foreach ($arrvalue as $thiskey => $thisval) {
-										if ($thisval == $property) $parse_property = false;
+									
+									foreach ($arrvalue as $thiskey => $thisval) 
+									{
+										if ($thisval == $this->get_label($val, $property)) $parse_property = false;
 									}
 									if (isset($val->multiple)) $parse_property = true;
 									
 									if ($parse_property == true) {									
 										$this->return_rdf_properties($url, $property, $val, $documentTag, $class, $xml);
-										$arrvalue[] = $property;
+										$arrvalue[] = $this->get_label($val, $property);
 										}
 									}
 								}
 							}
-						} unset($arrvalue);
+						}
 					} 
 					else 
 					{
@@ -354,7 +362,7 @@ class Dataset_Transformr
 		$result = '';
 		$type = isset( $val->type ) ? $val->type : "text";
 		
-		if (!isset($val->select))
+		if (!isset($val->where))
 		{
 			switch ($type) {
 			
@@ -363,9 +371,21 @@ class Dataset_Transformr
 			    break;
 				
 			    case "uri":
+					
 					$resource = isset($val->content) ? $this->get_content($val, $documentTag, true) : $this->return_resource($documentTag, $url);
-					$property = $xml->createElement($this->get_label($val, $prop));
-					$property->setAttribute("rdf:resource", $this->return_url($resource, $url));
+					
+					if ($lables = explode(' ', $this->get_label($val, $prop))) {
+						foreach ($lables as $lable) {
+							$property = $xml->createElement($lable);
+							$property->setAttribute("rdf:resource", $this->return_url($resource, $url));
+							$class->appendChild($property);
+						}
+					} 
+					else {
+						$property = $xml->createElement($this->get_label($val, $prop));
+						$property->setAttribute("rdf:resource", $this->return_url($resource, $url));
+					}
+					
 			    break;
 				
 				case 'uriplain': 
@@ -373,7 +393,7 @@ class Dataset_Transformr
 					$property = $xml->createElement($this->get_label($val, $prop), $this->return_url($resource, $url));
 				break;
 				
-				case 'literal':
+				case 'xmlliteral':
 					$children = $documentTag->childNodes;
 					$property = $xml->createElement($this->get_label($val, $prop));
 					$property->setAttribute('rdf:datatype', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral');
@@ -430,12 +450,19 @@ class Dataset_Transformr
 				$newroot->setAttribute("rdf:parseType", "Literal");	
 			}
 			
-			elseif (!isset($val->type) && !isset($val->rev))
+			else if (!isset($val->type) && !isset($val->rev))
 			{
 				$this->root = $xml->createElement($this->get_label($val, $prop));
 				$class->appendChild($this->root);
 				$newroot = $xml->createElement("rdf:Description");
 				$this->root->appendChild($newroot);
+			}
+			
+			if (isset($val->type) && strrchr($val->type, 'http://'))
+			{
+				$type = $xml->createElement('rdf:type');
+				$type->setAttribute("rdf:resource", $val->type);
+				$newroot->appendChild($type);
 			}
 			
 			$documentTags = $documentTag->getElementsByTagName('*');
