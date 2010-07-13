@@ -1,14 +1,12 @@
-= DatasetParser Version: 1.2 =
+= DatasetParser Version: 1.3 =
 
-Updated: Monday, 28th June 2010
+Updated: Tuesday, 13th July 2010
 
 Usage: 
  
  include_once("Dataset_Transformr.php"); # include Dataset_Transformr class
   
  $dataset = new Dataset_Transformr; # start a new dataset instance
- 
- $dataset->use_curl = 1; # optional default file_get_contents
 
  # $dataset->output_as_xml = 1; # optional default output as RDF
   
