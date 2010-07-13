@@ -1,43 +1,75 @@
 {
-"select": {
-	"from": "foaf.html",
-	"prefix": {
-		"value":"http://xmlns.com/foaf/0.1/",
-		"geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
-		"dc": "http://purl.org/dc/elements/1.1/",
-		"xfn": "http://gmpg.org/xfn/11#"
-	},
-	"where": {
-		"html": {
-			"label": "PersonalProfileDocument",
-			"where": {
-				"title": { "label": "dc:title"},
-				".vcard": {"label": "maker primaryTopic", "type": "uri"}
-			}
-		},
-		".vcard": { 
-			"label": "Person",
-			"where": {
-				".fn": { "label": "name" },
-				".url": { "label": "homepage", "type": "uri" },
-				".email": { "label": "mbox", "type": "uri" },
-				".given-name": { "label": "givenName" },
-				".family-name": { "label": "familyName" },
-				".photo": { "label": "img", "type": "uri" },
-				".geo": {
-					"about": false,
-					"label": "geo:Point",
-					"rev": "based_near",
-					"type": "http://www.w3.org/2000/10/swap/pim/contact#ContactLocation",
-					"where": {
-						".longitude": { "label": "geo:long" },
-						".latitude": { "label": "geo:lat" }
-						}
-					},
-					"rel~=me": { "label": "xfn:me", "type": "uri", "multiple": true },
-					".vcard": { "label": "knows", "type": "uri", "multiple": true }
-				}
-			}
-		}	
-	}
+  "select": {
+    "from": "foaf.html",
+    "prefix": {
+      "value": "http://xmlns.com/foaf/0.1/",
+      "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#",
+      "dc": "http://purl.org/dc/elements/1.1/",
+      "xfn": "http://gmpg.org/xfn/11#"
+    },
+    "where": {
+      "html": {
+        "label": "PersonalProfileDocument",
+        "where": {
+          "title": {
+            "label": "dc:title"
+          },
+          ".vcard": {
+            "label": "maker primaryTopic",
+            "type": "uri"
+          }
+        }
+      },
+      ".vcard": {
+        "label": "Person",
+        "where": {
+          ".fn": {
+            "label": "name"
+          },
+          ".url": {
+            "label": "homepage",
+            "type": "uri"
+          },
+          ".email": {
+            "label": "mbox",
+            "type": "uri"
+          },
+          ".given-name": {
+            "label": "givenName"
+          },
+          ".family-name": {
+            "label": "familyName"
+          },
+          ".photo": {
+            "label": "img",
+            "type": "uri"
+          },
+          ".geo": {
+            "about": false,
+            "label": "geo:Point",
+            "rev": "based_near",
+            "type": "http://www.w3.org/2000/10/swap/pim/contact#ContactLocation",
+            "where": {
+              ".longitude": {
+                "label": "geo:long"
+              },
+              ".latitude": {
+                "label": "geo:lat"
+              }
+            }
+          },
+          "rel~=me": {
+            "label": "xfn:me",
+            "type": "uri",
+            "multiple": true
+          },
+          ".vcard": {
+            "label": "knows",
+            "type": "uri",
+            "multiple": true
+          }
+        }
+      }
+    }
+  }
 }

@@ -1,0 +1,46 @@
+{
+  "select": {
+    "from": "http://www.youtube.com/results?search_query=semantic+web",
+    "prefix": {
+      "foaf": "http://xmlns.com/foaf/0.1/",
+      "dc": "http://purl.org/dc/terms/",
+      "sioc": "http://rdfs.org/sioc/ns#"
+    },
+    "where": {
+      ".video-entry": {
+        "label": "sioc:Post",
+        "about": false,
+        "where": {
+          ".video-title": {
+            "label": "dc:title"
+          },
+          "src~=default": {
+            "label": "foaf:img",
+            "type": "uri"
+          },
+          ".video-description": {
+            "label": "sioc:content"
+          },
+          "rel~=nofollow": {
+            "label": "sioc:link",
+            "type": "uriplain"
+          },
+          ".video-username": {
+            "rev": "sioc:has_creator",
+            "label": "sioc:UserAccount",
+            "about": false,
+            "where": {
+              "#video-from-username": {
+                "label": "foaf:name"
+              },
+              "href~=user": {
+                "label": "foaf:page",
+                "type": "uri"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,29 +1,37 @@
 {
-"select": {
-	"from": "hproduct.html",
-	"prefix": {
-		"value":"http://data-vocabulary.org/",
-		"money": "http://www.purl.org/net/rdf-money/" 
-	},
-	"where": {
-		".hproduct": { 
-			"label": "Product",
-			"about": {
-				"prod1": "http://anvil.example.com/"
-			},
-			"where": {
-				".brand": {},".category": {},
-				".fn": { "label": "name" },
-				".description": {},
-				".price": {
-					"label": "money:Price",
-					"where": {
-						".currency": { "label": "money:currency" },
-						".amount": { "label": "money:amount", "type": "http://www.w3.org/2001/XMLSchema#decimal" }
-						}
-					}
-				}
-			}
-		}	
-	}
+  "select": {
+    "from": "hproduct.html",
+    "prefix": {
+      "value": "http://data-vocabulary.org/",
+      "money": "http://www.purl.org/net/rdf-money/"
+    },
+    "where": {
+      ".hproduct": {
+        "label": "Product",
+        "about": {
+          "prod1": "http://anvil.example.com/"
+        },
+        "where": {
+          ".brand": {},
+          ".category": {},
+          ".fn": {
+            "label": "name"
+          },
+          ".description": {},
+          ".price": {
+            "label": "money:Price",
+            "where": {
+              ".currency": {
+                "label": "money:currency"
+              },
+              ".amount": {
+                "label": "money:amount",
+                "type": "http://www.w3.org/2001/XMLSchema#decimal"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

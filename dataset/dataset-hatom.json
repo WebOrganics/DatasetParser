@@ -1,37 +1,60 @@
 {
-"select": {
-	"from": "hatom.html",
-	"prefix": {
-		"value":"http://purl.org/rss/1.0/",
-		"dc": "http://purl.org/dc/elements/1.1/"
-	},
-	"where": {
-		".hfeed": { 
-			"label": "channel",
-			"where": {
-				"h1": { "label": "title" },
-				"h2": { "label": "description" },
-				"rel~=index": { "label": "link", "type": "uriplain" },
-				"#main": {
-					"about": false,
-					"label": "rdf:Seq",
-					"rev": "items",
-					"where": {
-						".hentry": { "label": "rdf:li", "type": "uri" }
-						}
-					}
-				}
-			},
-			".hentry": {
-				"label" : "item",
-				"where" : {
-					"rel~=bookmark" : { "label": "link", "type": "uriplain" },
-					".entry-title": { "label": "title" },
-					".author": { "label": "dc:creator" },
-					".updated": { "label": "dc:date", "type": "http://www.w3.org/2001/XMLSchema#dateTime" },
-					".entry-content": { "label": "description", "type": "cdata" }
-				}
-			}
-		}	
-	}
+  "select": {
+    "from": "hatom.html",
+    "prefix": {
+      "value": "http://purl.org/rss/1.0/",
+      "dc": "http://purl.org/dc/elements/1.1/"
+    },
+    "where": {
+      ".hfeed": {
+        "label": "channel",
+        "where": {
+          "h1": {
+            "label": "title"
+          },
+          "h2": {
+            "label": "description"
+          },
+          "rel~=index": {
+            "label": "link",
+            "type": "uriplain"
+          },
+          "#main": {
+            "about": false,
+            "label": "rdf:Seq",
+            "rev": "items",
+            "where": {
+              ".hentry": {
+                "label": "rdf:li",
+                "type": "uri"
+              }
+            }
+          }
+        }
+      },
+      ".hentry": {
+        "label": "item",
+        "where": {
+          "rel~=bookmark": {
+            "label": "link",
+            "type": "uriplain"
+          },
+          ".entry-title": {
+            "label": "title"
+          },
+          ".author": {
+            "label": "dc:creator"
+          },
+          ".updated": {
+            "label": "dc:date",
+            "type": "http://www.w3.org/2001/XMLSchema#dateTime"
+          },
+          ".entry-content": {
+            "label": "description",
+            "type": "cdata"
+          }
+        }
+      }
+    }
+  }
 }

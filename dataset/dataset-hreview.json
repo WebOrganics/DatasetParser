@@ -1,20 +1,29 @@
 {
-"select": {
-	"from": "hreview.html",
-	"prefix": {
-		"value":"http://data-vocabulary.org/" 
-	},
-	"where": {
-		".hreview": { 
-			"label": "Review",
-			"where": {
-				".reviewer": {},
-				".rating": { "type":"http://www.w3.org/2001/XMLSchema#int" },
-				".dtreviewed": { "type": "http://www.w3.org/2001/XMLSchema#date" },
-				".item": { "label": "itemreviewed", "type": "http://www.w3.org/2001/XMLSchema#string" },
-				".summary": { "type": "xmlliteral" }
-				}
-			}
-		}	
-	}
+  "select": {
+    "from": "hreview.html",
+    "prefix": {
+      "value": "http://data-vocabulary.org/"
+    },
+    "where": {
+      ".hreview": {
+        "label": "Review",
+        "where": {
+          ".reviewer": {},
+          ".rating": {
+            "type": "http://www.w3.org/2001/XMLSchema#int"
+          },
+          ".dtreviewed": {
+            "type": "http://www.w3.org/2001/XMLSchema#date"
+          },
+          ".item": {
+            "label": "itemreviewed",
+            "type": "http://www.w3.org/2001/XMLSchema#string"
+          },
+          ".summary": {
+            "type": "xmlliteral"
+          }
+        }
+      }
+    }
+  }
 }

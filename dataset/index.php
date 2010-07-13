@@ -3,13 +3,13 @@
 	
   include_once("Dataset_Transformr.php");
   
-  $data = new Dataset_Transformr;
+  if (isset($_GET['url'])) { 
   
-  $data->use_curl = 1;
+	$data = new Dataset_Transformr;
   
-  if (isset($_GET['url'])) print $data->asRDF();
+	print $data->asRDF();
   
-  else {
+  } else {
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -18,55 +18,16 @@
 	<title>JSON Datasets</title>
 	<style type="text/css">
 	<!--
-		body 
-		{
-			background:#FFF;
-			font-family:"Trebuchet MS","Bitstream Vera Sans",verdana,lucida,arial,helvetica,sans-serif;
-			margin-left:3%;
-			font-size:small;
-			text-align:justify;
-		}
-		div#header { clear:both; text-align:center;}
-		#references ul { margin-left:-25px; }
-		li { padding-bottom:0; }
-		#query-selectors ol li { list-style-type:decimal; }
-		#query-type ul,  #query-output ul{ margin-left: 25px; }
-		div#content  { margin-right:230px; }
-		div.sidebar { position:fixed; right:20px;}
-		div.sidebar ol {margin-left:0px;}
-		div.sidebar h3 {margin-left:15px;}
-		pre, samp, .profile {
-			background-color:black;
-			color:white;
-			padding:5px;
-			overflow:auto;
-		}
-		a {
-			background-color:transparent;
-			color:black;
-			text-decoration:none;
-			padding: 0 2px;
-		}
-		#content a { text-decoration:underline; }
-		a:hover, #content a:hover { 
-			text-decoration:none; 
-			-moz-border-radius-bottomleft:5px;
-			-moz-border-radius-bottomright:5px;
-			-moz-border-radius-topleft:5px;
-			-moz-border-radius-topright:5px;
-			-moz-box-shadow:0 0 2px black;
-		}
-		#references ul li { list-style-type:none; }
+		body{padding:1em 2em;margin:0 auto;font-family:sans-serif;color:black;background:white;width:80%}th,td{font-family:sans-serif}h1,h2,h3,h4,h5,h6{text-align:left}h1,h2,h3{color:#005A9C;background:white}h1{font:170% sans-serif}h2{font:140% sans-serif}h3{font:120% sans-serif}h4{font:bold 100% sans-serif}h5{font:italic 100% sans-serif}h6{font:small-caps 100% sans-serif}div.head{margin-bottom:1em}div.head h1{margin-top:2em;clear:both}div.head table{margin-left:2em;margin-top:2em}pre{margin-left:2em}/**/dt,dd{margin-top:0;margin-bottom:0}dt{font-weight:bold}pre,code{font-family:monospace}ul.toc{list-style:disc;list-style:none}#references ul li { list-style-type:none;}pre{background-color:#d5dee3;border-top-width:4px;border-top-style:double;border-top-color:#d3d3d3;border-bottom-width:4px;border-bottom-style:double;border-bottom-color:#d3d3d3;padding:4px;margin:0em}.vcard{padding-top:30px;}
 	//-->
 	</style>
 </head>
 <body id="home">
 <div id="header">
 <h1><a href="./">JSON Datasets</a></h1>
-<p>A JSON Dataset uses the <a href="#html-query-syntax">HTML Query syntax</a> to navigate the content of a HTML document and output the results as RDF.</p>
+<p>A JSON Dataset uses the <a href="#html-query-syntax">HTML Query syntax</a> to navigate the contents of an HTML document and output the results as RDF.</p>
 </div>
-<div class="sidebar">
-<h3>Navigation</h3>
+<h2><a id="contents" name="contents"></a>Table of Contents</h2>
 	<ol>
 		<li><a href="#html-query-syntax">Html Query Syntax</a></li>
 		<li><a href="#html-query-properties">Properties of HTML Query</a></li>
@@ -78,12 +39,12 @@
         <li><a href="#dataset-parsing">Dataset Parsing</a></li>
 		<li><a href="#examples">HTML Query Examples</a></li>
         <li><a href="#references">References</a></li>
+		<li><a href="#similar">Similar Work</a></li>
 	</ol>
-</div>
 <div id="content">
 <div id="html-query-syntax">
 <h2>Html Query Syntax</h2>
-<p>Html Query is a self description mechanism that uses [1]<a href="#json-specification">JSON</a> to describe the contents of a Html document. Although Html Query can be used with a vocabulary such as [2]<a href="#microformats">microformats</a>, HTML query does not require the author to change the html of a document in any way, you can just describe what already exists on a page without adding any extra attributes or elements to accommodate your intended semantics.</p>
+<p>Html Query is a self description mechanism that uses [1]<a href="#json-specification">JSON</a> to describe the contents of a Html document. Although Html Query can be used with a vocabulary such as [2]<a href="#microformats">microformats</a>, HTML query does not require the author to change the html of a document in any way, an author can just describe what already exists on a page without adding any extra attributes or elements to accommodate your intended semantics.</p>
 <p>The following is an example of a simple Html Query.</p>
 <pre>{
 	&quot;select&quot;:  {
@@ -122,6 +83,7 @@ echo htmlentities($str);
 	&quot;property&quot; : &quot;value&quot;
 }
 </pre>
+<p><a href="#contents" title="contents">[back to contents]</a></p>
 </div>
 
 <div id="html-query-properties">
@@ -140,10 +102,10 @@ echo htmlentities($str);
 	
 	<li id="query-from">
 		<h3>from</h3>
-		<p><code>from</code> is a url for the document to be queried. The value of <code>from</code> <em>should</em> be an absolute url</p>
+		<p><code>from</code> is a url for the document to be queried. The value of <code>from</code> should be an absolute url</p>
 		<p><em>Example:</em></p>
 		<pre>&quot;from&quot;: &quot;http://example.com/&quot;</pre>
-		<p>The <code>from</code> property <em>may</em> be omitted from a query.</p>
+		<p>The <code>from</code> property may be omitted. If the <code>from</code> property is omitted from a query, then the parser sets the value of <code>from</code> to the referring page.</p>
 	</li>
 	
 	<li id="query-prefix">
@@ -160,7 +122,7 @@ echo htmlentities($str);
 	&quot;vcard&quot;: &quot;http://www.w3.org/2006/vcard/ns#&quot;,
 	...
 }</pre>
-		<p>A default prefix for the output document <em>may</em> be set using the keyword property &quot;value&quot;</p>
+		<p>A default prefix for the output document may be set using the keyword &quot;value&quot;</p>
 		<p><em>Example:</em></p>
 		<pre>&quot;prefix&quot;: {
 	&quot;value&quot;: &quot;http://www.w3.org/2006/vcard/ns#&quot;,
@@ -171,7 +133,7 @@ echo htmlentities($str);
 	<li id="query-where">
 		<h3>where</h3>
 		<p><code>where</code> contains a list of comma separated html keyword selectors and their output properties. 
-		<code>where</code> may contain nested <code>where</code> statements. If a <code>where</code> keyword does contain a nested <code>where</code> statement then the keyword is treated as a &quot;<a href="#root-items">root</a>&quot; value, else the keyword is a property. A property keyword <strong>must</strong> not contain further <code>where</code> statements.</p>
+		<code>where</code> may contain nested <code>where</code> statements. If a <code>where</code> keyword does contain a nested <code>where</code> statement then the keyword is treated as a &quot;<a href="#root-items">root</a>&quot; value, else the keyword is a property. A property keyword should not contain further <code>where</code> statements.</p>
 		<p><em>Pattern of a root keyword that contains a nested keyword:</em></p>
 		<pre>&quot;where&quot;: {
 	&quot;selector&quot;:  {
@@ -192,7 +154,7 @@ echo htmlentities($str);
 		
 	</li>	
 </ol>
-
+<p><a href="#contents" title="contents">[back to contents]</a></p>
 </div>
 
 <div id="keyword-selectors">
@@ -224,11 +186,12 @@ echo htmlentities($str);
 		<pre>&quot;rel~=example&quot; is equal to rel=&quot;example&quot;</pre>
 	</li>
 </ol>
+<p><a href="#contents" title="contents">[back to contents]</a></p>
 </div>
 
 <div id="properties-of-select">
 <h2>Properties of Select</h2>
-<p>HTML Query Selectors contain six properties and one keyword property &quot;value&quot;, to set both input and output values.</p>
+<p>HTML Query Selectors contain six properties to set both input and output values.</p>
 <p><strong>Properties</strong></p>
 <ol>
 	<li id="query-about">
@@ -248,7 +211,7 @@ echo htmlentities($str);
 		<pre>&lt;div id=&quot;fred&quot;&gt;
 	...
 &lt;/div&gt;</pre>
-		<p>The about property can also accept a boolean value of &quot;false&quot;. Booleans in JSON may be unquoted strings.  Setting the about property to false  stops the parser from generating an about attribute in the RDF output.</p>
+		<p>The about property can also accept a boolean value of &quot;false&quot;. Booleans in JSON <em>may</em> be unquoted strings.  Setting the about property to false prevents a parser from generating an about attribute in the RDF output.</p>
 		<p><em>Example:</em></p>
 		<pre>&quot;about&quot;: false</pre>
 	</li>
@@ -259,15 +222,17 @@ echo htmlentities($str);
 		<pre>&quot;label&quot;: &quot;property&quot;</pre>
 		<p><em>Example:</em></p>
 		<pre>&quot;label&quot;: &quot;foaf:name&quot;</pre>
-		<p>The pre-defined type <a href="#pre-defined-types">uri</a> can contain a list to space seperated labels</p>
+		<p>The pre-defined type <a href="#pre-defined-types">uri</a> <em>may</em> contain a list to space seperated labels.</p>
 		<p><em>Example:</em></p>
 		<pre>&quot;label&quot;: &quot;foaf:primaryTopic foaf:maker&quot;</pre>
 	</li>
 	<li id="query-type">
 		<h3>type</h3>
-		<p>The datatype of a keyword or the datatype of the object in [4]<a href="#rdf-concepts">RDF terms</a>. As well as any standard datatypes such as [5]<a href="#xml-schema">XML Schema datatypes</a>,  HTML Query also supports five <a href="#pre-defined-types">Pre-Defined types</a>. If type is omitted from a keyword the parser defaults to &quot;text&quot;(plain literal).</p>
+		<p>The datatype of a keyword or the datatype of the object in [4]<a href="#rdf-concepts">RDF terms</a>. As well as any standard datatypes such as [5]<a href="#xml-schema">XML Schema datatypes</a>,  HTML Query also supports five <a href="#pre-defined-types">Pre-Defined types</a>. If type is omitted from a keyword the parser defaults to just &quot;text&quot;.</p>
 		<p><em>Pattern:</em></p>
 		<pre>&quot;type&quot;: &quot;value&quot;</pre>
+		<p><em>Example:</em></p>
+		<pre>&quot;type&quot;: &quot;http://www.w3.org/2001/XMLSchema#dateTime&quot;</pre>
 		<p id="pre-defined-types">Pre-Defined Types.</p>
 		<ol>
 			<li>
@@ -296,7 +261,7 @@ echo htmlentities($str);
 			
 			<li>
 				<h4>xmlliteral</h4>
-				<p>An XMLLiteral string. An <code>xmlliteral</code> <em>may</em> contain HTML markup or special characters, if the value does contain markup the value is converted to XHTML, all elements are placed in the http://www.w3.org/1999/xhtml XML namespace.</p>
+				<p>An XMLLiteral string. An <code>xmlliteral</code> <em>may</em> contain HTML markup or special characters, if the value does contain markup the value should be converted to XHTML, all elements should use the http://www.w3.org/1999/xhtml XML namespace.</p>
 				<p><em>Example Output:</em></p>
 				<pre>&lt;x:label rdf:datataype=&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral&quot;&gt;
 	&lt;p xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;Some text.&lt;/p&gt;
@@ -355,12 +320,8 @@ echo htmlentities($str);
 	&lt;/Person&gt;
 &lt;/knows&gt;</pre>
 	</li>
-
-	<li id="query-value">
-		<h3>value</h3>
-		<p>The value property is used as a descendant of <a href="#query-prefix">prefix</a> and is used to set the default vocablary of a query.</p>
-	</li>
 </ol>
+<p><a href="#contents" title="contents">[back to contents]</a></p>
 </div>
 
 <div id="root-selectors">
@@ -386,21 +347,24 @@ echo htmlentities($str);
     &lt;vcard:locality&gt;Albuquerque&lt;/vcard:locality&gt;
   &lt;/rdf:Description&gt;
 &lt;/vcard:adr&gt;</pre>
+<p><a href="#contents" title="contents">[back to contents]</a></p>
 </div>
 
 <div id="rdf-about">
 <h2>Setting RDF about</h2>
-<p>In the  absence of the <a href="#query-about">about property</a> HTML Query sets the RDF about attribute by selecting HTML values from the selected element or attribute in the following order, @href, @src and @id. If the value is @id then an absolute hash URI compiled from the <a href="#query-from">from</a> url and the value of @id.</p>
+<p>In the  absence of the <a href="#query-about">about property</a> HTML Query sets the RDF about attribute by selecting HTML values from the selected element or attribute in the following order, @href, @src and @id. If the value is @id then an absolute hash URI compiled from the <a href="#query-from">from</a> url and the value of @id. If a parser fails to select @href, @src or @id then the RDF about attribute is set to the value of <a href="#query-from">from</a></p>
 <p> Blank Nodes may be generated by setting the <a href="#query-about">about property</a> to false.</p>
+<p><a href="#contents" title="contents">[back to contents]</a></p>
 </div>
 
 <div id="linking-to-a-transformation">
 <h2>Linking to a JSON Dataset</h2>
 <p>A HTML Query for a page can be linked to using the html rel value &quot;dataset&quot;
 The [6]<a href="#hypertext-links">HTML Link relation</a> &quot;dataset&quot; is a short uri reference to http://weborganics.co.uk/ns/dataset ( this page ).
-By using rel dataset you are saying the url referenced in the href attribute of a link is a dataset  for the referring page. The link to a dataset <strong>must</strong> also contan the type specifier of "application/json"</p>
+By using rel dataset you are saying the url referenced in the href attribute of a link is a dataset  for the referring page. The link to a dataset should also contan a type specifier of "application/json"</p>
 <p><em>Example:</em></p>
 <pre>&lt;link rel=&quot;dataset&quot; href=&quot;http://example.com/my-dataset.json&quot; type=&quot;application/json&quot;&gt;</pre>
+<p><a href="#contents" title="contents">[back to contents]</a></p>
 </div>
 
 <div id="dataset-parsing">
@@ -414,11 +378,12 @@ By using rel dataset you are saying the url referenced in the href attribute of 
 <h3>Bookmarklet</h3>
 <p>There is also a bookmarklet that you can drag to your favourites toolbar.</p>
 <p title="Bookmarklet, Drag to favorites"><em>Bookmarklet:</em> <a href="javascript:void(location.href='http://weborganics.co.uk/dataset/?url='+location.href)">DatasetParse</a></p>
+<p><a href="#contents" title="contents">[back to contents]</a></p>
 </div>
 
 <div id="examples">
 <h2>Examples</h2>
-<p>Please click one of the following links to view the examples.</p>
+<p>The following examples were created during the development of the HTML Query syntax. Please click one of the following links to view the examples.</p>
 <p>Click the link at the bottom of each page that says &quot;Get RDF dataset&quot; to test.</p>
 	<ol>
     	<li>HTML <a href="article.html">Article</a>, view <a href="dataset-article.json">json</a></li>
@@ -430,38 +395,51 @@ By using rel dataset you are saying the url referenced in the href attribute of 
         <li>HTML <a href="organization.html">Organization</a>, view <a href="dataset-organization.json">json</a></li>
         <li>HTML <a href="hcard.html">hCard</a>, view <a href="dataset-hcard.json">json</a></li>
 		<li>HTML <a href="http://weborganics.co.uk/demo/haudio.html">hAudio</a>, view <a href="http://weborganics.co.uk/demo/haudio-query.json">json</a></li>
-		<li>RDFa <a href="rdfa.html">FOAF</a>, view <a href="dataset-rdfa.json">json</a></li>
 	</ol>
+<p>The following are &quot;real world&quot; examples performed on live webpages.</p>
+	<ol>
+		<li>A youtube search for videos about the semantic web. view <a href="youtube.json">json</a> or <a href="http://weborganics.co.uk/dataset/?url=http://weborganics.co.uk/dataset/youtube.json">results</a></li>
+		<li>...</li>
+	</ol>
+<p><a href="#contents" title="contents">[back to contents]</a></p>
 </div>
 
 <div id="references">
 <h2>References</h2>
-<ul>
+<ol>
 	<li>
-		[1] JSON specification. 
+		JSON specification. 
 		<a href="http://www.json.org/" name="json-specification" id="json-specification">http://www.json.org/</a>
 	</li>
 	<li>
-		[2] Microformats. 
+		Microformats. 
 		<a href="http://microformats.org/" name="microformats" id="microformats">http://microformats.org/</a>
 	</li>
 	<li>
-		[3] QName. 
+		QName. 
 		<a href="http://en.wikipedia.org/wiki/QName" name="QName" id="QName">http://en.wikipedia.org/wiki/QName</a>
 	</li>
 	<li>
-		[4] RDF Concepts and Abstract Syntax. 
+		RDF Concepts and Abstract Syntax. 
 		<a href="http://www.w3.org/TR/rdf-concepts/" name="rdf-concepts" id="rdf-concepts">http://www.w3.org/TR/rdf-concepts/</a>
 	</li>
 	<li>
-		[5] XML Schema Part 2: Datatype's Second Edition. 
+		XML Schema Part 2: Datatype's Second Edition. 
 		<a href="http://www.w3.org/TR/xmlschema-2/" name="xml-schema" id="xml-schema">http://www.w3.org/TR/xmlschema-2/</a>
 	</li>
 	<li>
-		[6] Hypertext Links in HTML. 
+		Hypertext Links in HTML. 
 		<a href="http://www.w3.org/TR/WD-htmllink-970328#link" name="hypertext-links" id="hypertext-links">http://www.w3.org/TR/WD-htmllink-970328#link</a>
 	</li>
-</ul>
+</ol>
+<p><a href="#contents" title="contents">[back to contents]</a></p>
+</div>
+<div id="similar">
+<h2>Similar Work</h2>
+<ol>
+	<li><a href="http://json-schema.org/">JSON Schema</a></li>
+</ol>
+<p><a href="#contents" title="contents">[back to contents]</a></p>
 </div>
 </div>
 <div id="license" class="vcard">
@@ -474,4 +452,5 @@ By using rel dataset you are saying the url referenced in the href attribute of 
 </body>
 </html>
 <?php
+ ini_set('display_errors', 1);
 } ?>

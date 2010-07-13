@@ -7,8 +7,6 @@
   include_once("Dataset_Transformr.php"); # include Dataset_Transformr class
    
   $dataset = new Dataset_Transformr; # start a new dataset instance
-   
-  $dataset->use_curl = 1; # optional default file_get_contents
  
   # $dataset->output_as_xml = 1; # optional default output as RDF
    
@@ -21,7 +19,6 @@ include_once("RDFTransformer.php");
 class Dataset_Transformr
 {
 	public $output_as_xml = '';
-	public $use_curl = '';
 	public $usedata= '';
 	
 	function __construct() 
@@ -124,18 +121,14 @@ class Dataset_Transformr
 	
 	protected function get_file_contents($url)
 	{
-		if ( $this->use_curl != '' ) {
-		
-			$cache = curl_init();
-			curl_setopt($cache, CURLOPT_RETURNTRANSFER, true );
-			curl_setopt($cache, CURLOPT_FOLLOWLOCATION, true );
-			curl_setopt($cache, CURLOPT_URL, $url);
-			curl_setopt($cache, CURLOPT_USERAGENT, 'Mozilla/5.0');
-			$result = curl_exec($cache);
-			curl_close($cache);
-			return html_convert_entities($result);
-		}
-		else return html_convert_entities(file_get_contents($url));
+		$cache = curl_init();
+		curl_setopt($cache, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt($cache, CURLOPT_FOLLOWLOCATION, true );
+		curl_setopt($cache, CURLOPT_URL, $url);
+		curl_setopt($cache, CURLOPT_USERAGENT, 'Mozilla/5.0');
+		$result = curl_exec($cache);
+		curl_close($cache);
+		return str_replace(array("&lt;", "&gt;"), array("<", ">"), htmlentities($result, ENT_NOQUOTES, "UTF-8"));
 	}
 	
 	protected function json_value($object, $value='')
@@ -219,18 +212,13 @@ class Dataset_Transformr
 		return $text;
 	}
 	
-	protected function return_document($parse, $document, $object) 
+	protected function return_document($document) 
 	{
-		if ( !isset($object->output) ) {
-			$this->output_type == 'xml' ?
-			header("Content-type: application/xml") :
-			header("Content-type: application/rdf+xml");
-			header("Content-Disposition: inline; filename=".$this->file);
-			return $document;
-		}
-		else {
-			return $parse->ARC2_Parse($this->url, $document, $object->output);
-		}
+		$this->output_type == 'xml' ?
+		header("Content-type: application/xml") :
+		header("Content-type: application/rdf+xml");
+		header("Content-Disposition: inline; filename=".$this->file);
+		return $document;
 	}
 	
  	private function rand_filename($ext = '') {
@@ -258,8 +246,6 @@ class Dataset_Transformr
 
 	public function asRDF()
 	{
-		$parse = new RDFTransformer;
-		
 		if (!$this->document) return $this->return_error('1');
 		
 		$dom = new DomDocument();
@@ -269,7 +255,7 @@ class Dataset_Transformr
 		$this->data = $this->usedata != '' ? $this->get_file_contents($this->usedata) : $this->get_file_contents($this->json_dataset($xpath, $this->url));
 		if (!$this->data) return $this->return_error('2');
 		
-		$this->json = json_decode( html_convert_entities($this->data) );
+		$this->json = json_decode($this->data);
 		if (!$this->json) return $this->return_error('3');
 		
 		$object = $this->json->select;
@@ -291,7 +277,7 @@ class Dataset_Transformr
 		}
 		
 		$document = $xml->saveXML();
-		return $this->return_document($parse, $document, $object);
+		return $this->return_document($document);
 	}
 	
 	private function json_query_rdf_properties($url, $object, $documentTag, $root, $xml, $hasroot ='') 
