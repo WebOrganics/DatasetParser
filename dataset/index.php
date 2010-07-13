@@ -1,6 +1,4 @@
 <?php
-  ini_set('display_errors', 0);
-	
   include_once("Dataset_Transformr.php");
   
   if (isset($_GET['url'])) { 
@@ -442,15 +440,13 @@ By using rel dataset you are saying the url referenced in the href attribute of 
 <p><a href="#contents" title="contents">[back to contents]</a></p>
 </div>
 </div>
-<div id="license" class="vcard">
+<div class="vcard">
 <p>
-	<a class="url fn org" href="http://weborganics.co.uk/">WebOrganics</a> 2010, 
-	<a href="http://creativecommons.org/licenses/publicdomain/deed.en_GB" rel="license">Public Domain Licence</a>.
+	<a class="url fn org" href="http://weborganics.co.uk/">WebOrganics</a> 2010.
 </p>
 <img alt="Semantic Web" src="/images/sw-horz.png" />
 </div>
 </body>
 </html>
 <?php
- ini_set('display_errors', 1);
 } ?>

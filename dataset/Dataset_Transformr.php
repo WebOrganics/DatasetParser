@@ -1,20 +1,24 @@
 <?php
 /*
- Dataset TransFormr Version: 1.1, Saturday, 15th May 2010
+ Dataset TransFormr Version: 1.3, Tuesday, 13th July 2010
  Author: Martin McEvoy info@weborganics.co.uk
  Usage:
-   
-  include_once("Dataset_Transformr.php"); # include Dataset_Transformr class
-   
-  $dataset = new Dataset_Transformr; # start a new dataset instance
  
-  # $dataset->output_as_xml = 1; # optional default output as RDF
-   
-  if (isset($_GET['url'])) print $dataset->asRDF(); # if ?url=... return dataset as RDF.
+   include_once("Dataset_Transformr.php"); # include Dataset_Transformr class
+
+   # if get ?url= 
+   if (isset($_GET['url'])) { 
+  
+	$data = new Dataset_Transformr; # start a new dataset instance
+	
+	# $dataset->output_as_xml = 1; # optional default output as RDF
+  
+	print $data->asRDF(); # return dataset as RDF/XML.
+  
+  }
    
  See Also: http://weborganics.co.uk/dataset/ for more information.
  */
-include_once("RDFTransformer.php");
 
 class Dataset_Transformr
 {
@@ -36,6 +40,8 @@ class Dataset_Transformr
 		$this->output_type = $this->output_as_xml == true  ? 'xml' : 'rdf';
 		
 		$this->file = $this->rand_filename($this->output_type);
+		
+		ini_set('display_errors',  0 );
 	}
 
 	/* JSON Dataset Functions */
@@ -123,12 +129,11 @@ class Dataset_Transformr
 	{
 		$cache = curl_init();
 		curl_setopt($cache, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt($cache, CURLOPT_FOLLOWLOCATION, true );
 		curl_setopt($cache, CURLOPT_URL, $url);
 		curl_setopt($cache, CURLOPT_USERAGENT, 'Mozilla/5.0');
-		$result = curl_exec($cache);
+		$result = str_replace(array("&lt;", "&gt;"), array("<", ">"), htmlentities(curl_exec($cache), ENT_NOQUOTES, "UTF-8"));
 		curl_close($cache);
-		return str_replace(array("&lt;", "&gt;"), array("<", ">"), htmlentities($result, ENT_NOQUOTES, "UTF-8"));
+		return $result;
 	}
 	
 	protected function json_value($object, $value='')
