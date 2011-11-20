@@ -1,0 +1,42 @@
+{
+    "prefix": {
+        "vcard": "http://www.w3.org/2006/vcard/ns#",
+        "rel": "http://purl.org/vocab/relationship/" 
+    },
+    "select": {
+        ".vcard": [
+            {
+                "as": "vcard:vCard",
+                ".fn": {
+                    "as": "vcard:fn" 
+                },
+                ".nickname": {
+                    "as": "vcard:nickname" 
+                },
+                ".org": {
+                    "as": "vcard:org" 
+                },
+                ".title": {
+                    "as": "vcard:title" 
+                },
+                ".url": {
+                    "as": "vcard:url",
+                    "type": "uri" 
+                },
+                "rel~=friend": {
+                    "as": "rel:friendOf",
+                    "type": "uri" 
+                },
+                ".adr": [
+                    {
+                        "as": "vcard:adr",
+                        ".locality": {
+                            "as": "vcard:locality" 
+                        } 
+                    } 
+                ] 
+            } 
+        ] 
+    },
+    "from": "http://weborganics.co.uk/dataset/hcard.html"
+}

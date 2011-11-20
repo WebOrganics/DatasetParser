@@ -1,11 +1,11 @@
 {
-	"select":  {
-		"from": "http://example.com/",
-		"prefix": {
-			"dc": "http://purl.org/dc/elements/1.1/"
-		},
-		"where": {
-			"title": {  "label": "dc:title" }
+	"prefix": {
+		"dc": "http://purl.org/dc/elements/1.1/"
+	},
+	"select": {
+		"title": {
+			"as": "dc:title"
 		}
-	}
+	},
+	"from": "http://example.com/"
 }

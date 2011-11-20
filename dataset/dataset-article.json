@@ -1,40 +1,64 @@
 {
-"select": {
-	"from": "article.html",
 	"prefix": {
-		"value":"http://purl.org/rss/1.0/",
+		"value": "http://purl.org/rss/1.0/",
 		"dc": "http://purl.org/dc/elements/1.1/",
 		"media": "http://purl.org/microformat/hmedia/"
- 
 	},
-	"where": {
-		"article": { 
-			"label": "channel",
-			"where": {
-				"h1": { "label": "title" },
-				"h2": { "label": "description" },
-				"rel~=index": { "label": "link", "type": "uriplain" },
+	"select": {
+		"article": {
+			"as": "channel",
+			"select": {
+				"h1": {
+					"as": "title"
+				},
+				"h2": {
+					"as": "description"
+				},
+				"rel~=index": {
+					"as": "link",
+					"type": "uriplain"
+				},
 				"ol": {
 					"rev": "items",
-					"label": "rdf:Seq",
+					"as": "rdf:Seq",
 					"about": false,
-						"where": {
-							"section": { "label": "rdf:li", "type": "uri", "multiple": true }
+					"select": {
+						"section": {
+							"as": "rdf:li",
+							"type": "uri",
+							"multiple": true
 						}
 					}
 				}
-			},
-			"section": {
-				"label" : "item",
-				"where" : {
-					"h3": { "label": "title" },
-					"rel~=bookmark" : { "label": "link", "type": "uriplain" },
-					".vcard": { "label": "dc:creator" },
-					"time": { "label": "dc:date",  "type": "http://www.w3.org/2001/XMLSchema#dateTime"  },
-					"div": { "label": "description", "type": "cdata" },
-					"rel~=enclosure" : { "label": "media:enclosure", "type": "uri" }
+			}
+		},
+		"section": {
+			"as": "item",
+			"select": {
+				"h3": {
+					"as": "title"
+				},
+				"rel~=bookmark": {
+					"as": "link",
+					"type": "uriplain"
+				},
+				".vcard": {
+					"as": "dc:creator"
+				},
+				"time": {
+					"as": "dc:date",
+					"type": "http://www.w3.org/2001/XMLSchema#dateTime"
+				},
+				"div": {
+					"as": "description",
+					"type": "cdata"
+				},
+				"rel~=enclosure": {
+					"as": "media:enclosure",
+					"type": "uri"
 				}
 			}
-		}	
-	}
+		}
+	},
+	"from": "http://weborganics.co.uk/dataset/article.html"
 }

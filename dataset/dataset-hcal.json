@@ -1,35 +1,37 @@
 {
-"select": {
-	"from": "hcal.html",
 	"prefix": {
-		"value":"http://www.w3.org/2002/12/cal/ical#" 
+		"value": "http://www.w3.org/2002/12/cal/ical#"
 	},
-	"where": {
+	"select": {
 		"body": {
-			"label": "Vcalendar",
-			"where": {
+			"as": "Vcalendar",
+			"select": {
 				"h1": {
-					"label": "prodid",
+					"as": "prodid",
 					"content": "-//weborganics.co.uk//dataset//hcal $Date: 2010/05/01 19:08:00 $ (BETA)//EN"
 				},
 				".vevent": {
-					"label": "component",
+					"as": "component",
 					"type": "uri"
 				}
 			}
 		},
 		".vevent": {
-		  "label": "Vevent", 
-			"where": {
-				".summary": {}, 
-				".dtstamp": {}, 
+			"as": "Vevent",
+			"select": {
+				".summary": {},
+				".dtstamp": {},
 				".uid": {},
-				".dtstart": {"type": "http://www.w3.org/2001/XMLSchema#dateTime"},
-				".dtend": {"type": "http://www.w3.org/2001/XMLSchema#dateTime"},
+				".dtstart": {
+					"type": "http://www.w3.org/2001/XMLSchema#dateTime"
+				},
+				".dtend": {
+					"type": "http://www.w3.org/2001/XMLSchema#dateTime"
+				},
 				".class": {},
 				".category": {}
-				}
 			}
-		}	
-	}
+		}
+	},
+	"from": "http://weborganics.co.uk/dataset/hcal.html"
 }

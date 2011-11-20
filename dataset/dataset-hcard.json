@@ -1,31 +1,45 @@
 {
-"select": {
-	"from": "hcard.html",
 	"prefix": {
-		"vcard":"http://www.w3.org/2006/vcard/ns#",
-		"rel": "http://purl.org/vocab/relationship/" 
+		"vcard": "http://www.w3.org/2006/vcard/ns#",
+		"rel": "http://purl.org/vocab/relationship/"
 	},
-	"where": {
-		".vcard": { 
-			"label": "vcard:vCard",
+	"select": {
+		".vcard": {
 			"about": {
 				"smithy": "http://example.com/#smithy"
 			},
-			"where": {
-				".fn": { "label": "vcard:fn" },
-				".nickname": { "label": "vcard:nickname" },
-				".org": { "label": "vcard:org" },
-				".title": { "label": "vcard:title" },
-				".url": { "label": "vcard:url", "type": "uri" },
-				"rel~=friend": { "label": "rel:friendOf", "type": "uri" },
+			"as": "vcard:vCard",
+			"select": {
+				".fn": {
+					"as": "vcard:fn"
+				},
+				".nickname": {
+					"as": "vcard:nickname"
+				},
+				".org": {
+					"as": "vcard:org"
+				},
+				".title": {
+					"as": "vcard:title"
+				},
+				".url": {
+					"as": "vcard:url",
+					"type": "uri"
+				},
+				"rel~=friend": {
+					"as": "rel:friendOf",
+					"type": "uri"
+				},
 				".adr": {
-					"label": "vcard:adr",
-					"where": {
-						".locality": { "label": "vcard:locality" }
+					"as": "vcard:adr",
+					"select": {
+						".locality": {
+							"as": "vcard:locality"
 						}
 					}
 				}
 			}
-		}	
-	}
+		}
+	},
+	"from": "http://weborganics.co.uk/dataset/hcard.html"
 }

@@ -1,37 +1,35 @@
 {
-  "select": {
-    "from": "hproduct.html",
-    "prefix": {
-      "value": "http://data-vocabulary.org/",
-      "money": "http://www.purl.org/net/rdf-money/"
-    },
-    "where": {
-      ".hproduct": {
-        "label": "Product",
-        "about": {
-          "prod1": "http://anvil.example.com/"
-        },
-        "where": {
-          ".brand": {},
-          ".category": {},
-          ".fn": {
-            "label": "name"
-          },
-          ".description": {},
-          ".price": {
-            "label": "money:Price",
-            "where": {
-              ".currency": {
-                "label": "money:currency"
-              },
-              ".amount": {
-                "label": "money:amount",
-                "type": "http://www.w3.org/2001/XMLSchema#decimal"
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+	"prefix": {
+		"value": "http://data-vocabulary.org/",
+		"money": "http://www.purl.org/net/rdf-money/"
+	},
+	"select": {
+		".hproduct": {
+			"as": "Product",
+			"about": {
+				"prod1": "http://anvil.example.com/"
+			},
+			"select": {
+				".brand": {},
+				".category": {},
+				".fn": {
+					"as": "name"
+				},
+				".description": {},
+				".price": {
+					"as": "money:Price",
+					"select": {
+						".currency": {
+							"as": "money:currency"
+						},
+						".amount": {
+							"as": "money:amount",
+							"type": "http://www.w3.org/2001/XMLSchema#decimal"
+						}
+					}
+				}
+			}
+		}
+	},
+	"from": "http://weborganics.co.uk/dataset/hproduct.html"
 }

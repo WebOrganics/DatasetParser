@@ -1,34 +1,32 @@
 {
-  "select": {
-    "from": "organization.html",
-    "prefix": {
-      "value": "http://www.w3.org/2006/vcard/ns#",
-      "gr": "http://purl.org/goodrelations/v1#"
-    },
-    "where": {
-      ".vcard": {
-        "label": "gr:BusinessEntity",
-        "where": {
-          ".org": {
-            "label": "gr:legalName",
-            "type": "http://www.w3.org/2001/XMLSchema#string"
-          },
-          ".url": {
-            "type": "uri"
-          },
-          ".adr": {
-            "label": "Address",
-            "type": "resource",
-            "where": {
-              ".street-address": {},
-              ".locality": {},
-              ".region": {},
-              ".postal-code": {},
-              ".tel": {}
-            }
-          }
-        }
-      }
-    }
-  }
+	"prefix": {
+		"value": "http://www.w3.org/2006/vcard/ns#",
+		"gr": "http://purl.org/goodrelations/v1#"
+	},
+	"select": {
+		".vcard": {
+			"as": "gr:BusinessEntity",
+			"select": {
+				".org": {
+					"as": "gr:legalName",
+					"type": "http://www.w3.org/2001/XMLSchema#string"
+				},
+				".url": {
+					"type": "uri"
+				},
+				".adr": {
+					"as": "Address",
+					"type": "resource",
+					"select": {
+						".street-address": {},
+						".locality": {},
+						".region": {},
+						".postal-code": {},
+						".tel": {}
+					}
+				}
+			}
+		}
+	},
+	"from": "http://weborganics.co.uk/dataset/organization.html"
 }
